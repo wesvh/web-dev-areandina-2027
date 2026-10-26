@@ -1,0 +1,49 @@
+name: festival-vallenato-2027
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: festival
+      MYSQL_USER: festival
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Run ./start.sh to initialize local secrets}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Run ./start.sh to initialize local secrets}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql-init/01-test-grant.sql:/docker-entrypoint-initdb.d/01-test-grant.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql --protocol=TCP -h 127.0.0.1 -u \"$$MYSQL_USER\" -D festival -Nse 'SELECT 1' >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+  web:
+    build: .
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Run ./start.sh to initialize local secrets}
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-False}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
+      MYSQL_DATABASE: festival
+      MYSQL_USER: festival
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Run ./start.sh to initialize local secrets}
+      MYSQL_HOST: db
+      MYSQL_PORT: "3306"
+      DEMO_ADMIN_USER: ${DEMO_ADMIN_USER:-admin_demo}
+      DEMO_ADMIN_PASSWORD: ${DEMO_ADMIN_PASSWORD:?Run ./start.sh to initialize local secrets}
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/', timeout=4)"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+volumes:
+  mysql_data:

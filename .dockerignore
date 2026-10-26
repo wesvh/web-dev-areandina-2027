@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+.codegraph
+.working
+__pycache__
+*.pyc
+.venv
+staticfiles
+evidence
+reports
+odd
+tmp
