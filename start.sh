@@ -22,6 +22,7 @@ if [ ! -f .env ]; then
 fi
 chmod 600 .env
 docker compose up --build --wait --wait-timeout 180
-echo "Application is healthy. Open http://localhost:$(sed -n 's/^WEB_PORT=//p' .env | head -1)/"
+port="${WEB_PORT:-$(sed -n 's/^WEB_PORT=//p' .env | head -1)}"
+echo "Application is healthy. Open http://localhost:$port/"
 echo "Admin: /admin/ . Local credentials: DEMO_ADMIN_USER and DEMO_ADMIN_PASSWORD in .env."
 echo "Never share .env, credentials or database volumes. This is an academic local environment."
