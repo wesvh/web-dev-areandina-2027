@@ -21,7 +21,7 @@ OUT = ROOT / 'reports/Entrega_2_Vallenato_2027_APA.pdf'
 OUT.parent.mkdir(exist_ok=True)
 verification = json.loads((EVIDENCE/'verification.json').read_text())
 restart = json.loads((EVIDENCE/'restart.json').read_text())
-mobile = json.loads((EVIDENCE/'mobile.json').read_text())
+desktop = json.loads((EVIDENCE/'desktop.json').read_text())
 assert verification['passed'] and restart['passed']
 test_output = next(c['output'] for c in verification['checks'] if c['name'].startswith('Full Django'))
 test_count = int(re.search(r'Ran (\d+) tests', test_output).group(1))
@@ -68,7 +68,7 @@ def table(name,headers,rows,widths):
 
 class CaptureFragment(Flowable):
     """Clip a source capture in PDF layout without editing its pixel content."""
-    def __init__(self,path,top=0,height=None,max_width=224,max_height=470):
+    def __init__(self,path,top=0,height=None,max_width=W,max_height=470):
         super().__init__()
         self.reader=ImageReader(str(path))
         self.source_width,self.source_height=self.reader.getSize()
@@ -86,14 +86,15 @@ class CaptureFragment(Flowable):
                     width=self.source_width*self.scale,height=self.source_height*self.scale)
         c.restoreState()
 
-def figure(name,left,right,note):
+def figure(name,captures,note):
     global figure_number
     figure_number+=1
     paragraph(f'Figura {figure_number}',caption)
     paragraph(name,title)
-    t=Table([[left,right]],colWidths=[234,234],hAlign='LEFT')
-    t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),4),
-                           ('RIGHTPADDING',(0,0),(-1,-1),4)]))
+    t=Table([[capture] for capture in captures],colWidths=[W],hAlign='LEFT')
+    t.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'TOP'),('ALIGN',(0,0),(-1,-1),'CENTER'),
+                           ('LEFTPADDING',(0,0),(-1,-1),0),('RIGHTPADDING',(0,0),(-1,-1),0),
+                           ('TOPPADDING',(0,0),(-1,-1),0),('BOTTOMPADDING',(0,0),(-1,-1),0)]))
     story.append(t)
     paragraph('<i>Nota.</i> '+note,plain)
 
@@ -145,44 +146,41 @@ table('Comprobaciones observadas',['Prueba / procedimiento','Resultado'],[
     ['SELECT VERSION(); consultas ORM','MySQL 8.4.13; dos ediciones y catálogo persistido.'],
     ['Registro, login, logout y Admin en navegador','Cuenta ficticia creada; sesión iniciada/cerrada; categoría guardada.'],
     ['Detener web y ejecutar ./start.sh','Mismos registros y categoría de evidencia con ID 3: persistencia aprobada.'],
-    ['Inspección DOM móvil',f'Ancho efectivo {mobile["viewport"]} px; sin desbordamiento horizontal.']
+    ['Inspección DOM de escritorio',f'Ventana {desktop["viewport"]["width"]} × {desktop["viewport"]["height"]} px; opciones sin desbordamiento horizontal.']
 ],[218,250])
 paragraph('El contenedor web no recibe la contraseña root de MySQL y se ejecuta sin root. La base no publica puertos; la aplicación se enlaza a localhost. Los secretos permanecen en .env, excluido del repositorio, del ZIP y de las capturas. No es un despliegue productivo.')
 
 section('Evidencia: consulta de ediciones')
 figure('Catálogo público con ediciones almacenadas en MySQL',
-       CaptureFragment(EVIDENCE/'01-ediciones.jpg',0,600),
-       CaptureFragment(EVIDENCE/'01-ediciones.jpg',600),
-       'Fragmentos superior e inferior de una misma captura real. Se observan las ediciones 2027 y 2028 y el aviso de datos ficticios. El contenido proviene del ORM, no de arreglos estáticos.')
+       [CaptureFragment(EVIDENCE/'01-ediciones.jpg')],
+       'Captura completa de la página en navegador de escritorio, con ventana de 1440 × 900 px y captura de página completa. Las tarjetas de 2027 y 2028 aparecen en columnas. El contenido proviene del ORM, no de arreglos estáticos.')
 
 section('Evidencia: votación y opciones')
 figure('Recorrido público hasta las opciones de una votación',
-       CaptureFragment(EVIDENCE/'02-opciones-mysql.jpg',0,600),
-       CaptureFragment(EVIDENCE/'02-opciones-mysql.jpg',600),
-       'Dos fragmentos de la misma pantalla. La ruta conserva edición y categoría; se muestran estado, descripción y opciones relacionadas. La interfaz declara que todavía no registra votos.')
+       [CaptureFragment(EVIDENCE/'02-opciones-mysql.jpg')],
+       'Vista completa de escritorio: navegación horizontal, ruta de edición y categoría, estado y opciones relacionadas. La interfaz declara que todavía no registra votos. Los datos proceden de MySQL.')
 
 section('Evidencia: autenticación')
-figure('Registro y sesión de un usuario sin permisos administrativos',
-       CaptureFragment(EVIDENCE/'03-registro.jpg',180,950),
-       CaptureFragment(EVIDENCE/'04-sesion-iniciada.jpg',0,340),
-       'Izquierda: formulario real con validadores de contraseña. Derecha: sesión de visitante_evidencia iniciada tras el registro y login; no aparece el enlace administrativo. La prueba posterior de logout devolvió los enlaces de acceso. No se muestran contraseñas.')
+figure('Registro y sesión autenticada en escritorio',
+       [CaptureFragment(EVIDENCE/'03-registro.jpg'),
+        CaptureFragment(EVIDENCE/'04-sesion-iniciada.jpg',0,170)],
+       'Formulario completo y detalle horizontal de la cabecera de una sesión admin_demo. No se muestran contraseñas. El cierre de sesión posterior volvió a mostrar los enlaces de acceso.')
 
 section('Evidencia: administración')
-figure('Modelos administrables y confirmación de guardado',
-       CaptureFragment(EVIDENCE/'05-admin.jpg'),
-       CaptureFragment(EVIDENCE/'06-admin-guardado.jpg',95,690),
-       'Izquierda: Django Admin reconoce ediciones, categorías, votaciones y opciones. Derecha: mensaje de guardado y nueva categoría ficticia vinculada a 2027. El cambio se realizó mediante el formulario, no modificando la base manualmente.')
+figure('Panel administrativo y categoría persistida',
+       [CaptureFragment(EVIDENCE/'05-admin.jpg',max_height=250),
+        CaptureFragment(EVIDENCE/'06-admin-guardado.jpg',max_height=250)],
+       'Panel de modelos y formulario de la categoría ID 3 ya guardada en MySQL. Estas vistas completas de escritorio no representan un nuevo guardado.')
 
 section('Evidencia: visualización dinámica y persistencia')
 figure('La categoría registrada en Admin aparece en la interfaz pública',
-       CaptureFragment(EVIDENCE/'07-categoria-publica.jpg',0,600),
-       CaptureFragment(EVIDENCE/'07-categoria-publica.jpg',600),
-       'Fragmentos de la consulta pública de 2027. Aparece Evidencia de persistencia - ficticia, creada desde Admin. Después de detener web y arrancar con ./start.sh se conservaron tres categorías, cuatro votaciones y cuatro opciones; la categoría mantuvo ID 3.')
+       [CaptureFragment(EVIDENCE/'07-categoria-publica.jpg')],
+       'Vista completa de escritorio de la edición 2027. Aparece Evidencia de persistencia - ficticia, creada anteriormente desde Admin. La prueba de reinicio registrada conservó tres categorías, cuatro votaciones y cuatro opciones; la categoría mantuvo ID 3.')
 
 section('Repositorio, video y conclusiones')
 paragraph('<b>Repositorio público:</b> <link href="https://github.com/wesvh/web-dev-areandina-2027">https://github.com/wesvh/web-dev-areandina-2027</link>. Código, migraciones, pruebas y evidencias publicados en la rama master mediante SSH de la cuenta personal wesvh. La publicación pública fue autorizada expresamente el 26 de octubre de 2026. El README explica la ejecución local con Docker; publicar el código no implica alojar la aplicación en internet.')
 paragraph('<b>Video:</b> enlace pendiente de proporcionar. Se incluye un guion de grabación en el proyecto; no se inventó una demostración grabada ni la participación de otras personas. Antes del envío, publicar el video con permisos para el docente y reemplazar este pendiente.')
-paragraph('Se logró una base ejecutable con relaciones persistentes, autenticación nativa, administración y consulta dinámica. Las pruebas y el reinicio respaldan el alcance funcional; no prueban seguridad productiva, carga ni reglas definitivas de votación.')
+paragraph('Se aprendió a integrar MVT, ORM y MySQL en una base persistente. Las dificultades de integración fueron descubrir los archivos estáticos y crear el administrador de forma idempotente; se corrigieron y cubrieron con pruebas. La verificación no acredita seguridad productiva ni reglas definitivas de votación.')
 paragraph('<b>Responsabilidades:</b> Esteban Villada Henao figura como único autor, responsable de revisar y justificar análisis, código, pruebas y evidencias. Se utilizó IA como apoyo técnico. La guía exige cuatro integrantes y establece 0/5 en el criterio de trabajo grupal para entregas individuales; esta presentación no declara una excepción aprobada.')
 paragraph('<b>Antes de entregar:</b> completar programa académico y enlace del video; verificar permisos del video desde otra sesión. El repositorio es público y no requiere invitación para consultar el código. Registro definitivo de votos, resultados, elegibilidad avanzada y producción quedan para próximas fases.')
 

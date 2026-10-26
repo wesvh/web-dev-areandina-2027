@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-26",
+  "capture_type": "real desktop browser, full-page JPEG",
+  "viewport": {"width": 1440, "height": 900},
+  "horizontal_overflow_on_options_page": false,
+  "captures": [
+    {"file": "01-ediciones.jpg", "url": "http://localhost:8000/", "width": 1425, "height": 1111},
+    {"file": "02-opciones-mysql.jpg", "url": "http://localhost:8000/polls/1/", "width": 1425, "height": 1135},
+    {"file": "03-registro.jpg", "url": "http://localhost:8000/accounts/register/", "width": 1425, "height": 1314},
+    {"file": "04-sesion-iniciada.jpg", "url": "http://localhost:8000/", "width": 1425, "height": 1111},
+    {"file": "05-admin.jpg", "url": "http://localhost:8000/admin/", "width": 1440, "height": 900},
+    {"file": "06-admin-guardado.jpg", "url": "http://localhost:8000/admin/catalog/category/3/change/", "width": 1440, "height": 900},
+    {"file": "07-categoria-publica.jpg", "url": "http://localhost:8000/editions/1/", "width": 1425, "height": 1055}
+  ],
+  "notes": [
+    "Public full-page captures exclude the browser scrollbar, hence width 1425 despite viewport 1440.",
+    "Full source images remain unedited; PDF includes one labelled horizontal header detail from the authenticated desktop capture.",
+    "Authenticated desktop screenshot shows existing admin_demo session, not a newly registered visitor.",
+    "Admin category screenshot shows an existing persisted record, not a new save confirmation.",
+    "No new registration, database record edit or password change was performed."
+  ]
+}

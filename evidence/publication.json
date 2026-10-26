@@ -14,6 +14,13 @@
   "checked_credential_findings": 0,
   "zip_integrity_passed": true,
   "local_secrets_excluded": true,
+  "subsequent_document_update": {
+    "date": "2026-10-26",
+    "desktop_manifest": "evidence/desktop.json",
+    "video_script": "reports/GUION_VIDEO.md",
+    "teacher_checklist": "reports/CHECKLIST_ENTREGA.md",
+    "note": "The verified_report_commit above records the earlier public-read check, not the later desktop-layout revision."
+  },
   "limitations": [
     "Credential scanning covers checked patterns and known local secrets, not every possible secret.",
     "GitHub hosts the source code, not the running Django application.",

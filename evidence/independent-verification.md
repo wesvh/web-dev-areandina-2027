@@ -17,6 +17,8 @@ Fecha: 25 de octubre de 2026. Candidato de ejecución: `cfe938d25c1809fe4c7e2f85
 - `.env` generado con modo 600, excluido del código versionado y de la imagen; contraseña root de MySQL ausente del entorno web.
 - PDF: 11 páginas tamaño Carta, autor y docente correctos, campos pendientes identificados. La inspección visual fue realizada por el autor de la entrega, no por el verificador independiente.
 
+Actualización documental del 26 de octubre: las siete capturas se reemplazaron por vistas reales de escritorio, ventana 1440×900. El PDF mantiene 11 páginas, figuras principalmente completas y un detalle horizontal de cabecera identificado expresamente. La sesión mostrada ahora es `admin_demo`; el formulario administrativo muestra la categoría existente ID 3, no un nuevo guardado. Estas actualizaciones documentales no alteraron código de ejecución ni registros del catálogo y no se presentan como una nueva ejecución de la suite independiente.
+
 El autor repitió `check` en el sistema principal: sin problemas. Comparó sus registros con `evidence/restart.json`: 2 ediciones, 3 categorías, 4 votaciones y 4 opciones; categoría de evidencia ID 3 conservada. El volumen principal no se eliminó. Los contenedores, red y volumen del verificador se eliminaron separadamente.
 
 ## Límites y pendientes
