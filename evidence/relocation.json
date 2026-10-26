@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-26",
+  "destination": "~/Documents/Universidad/festival-vallenato-2027",
+  "old_checkout_removed_by_move": true,
+  "compose_project": "festival-vallenato-2027",
+  "preserved_volume": "festival-vallenato-2027_mysql_data",
+  "catalog_counts_before": [2, 3, 4, 4],
+  "catalog_counts_after": [2, 3, 4, 4],
+  "user_count_before": 2,
+  "user_count_after": 2,
+  "catalog_digest_unchanged": true,
+  "local_env_digest_unchanged": true,
+  "local_env_mode": "0600",
+  "both_container_working_directory_labels_use_new_path": true,
+  "django_check_passed": true,
+  "migration_drift_check_passed": true,
+  "independent_verification": "PASS",
+  "mysql_tests_passed_after_move": 23,
+  "main_counts_preserved_after_tests": true,
+  "health_endpoint_passed": true,
+  "checkout_runtime_files_match_cfe938d": 41,
+  "old_path_remaining_content": "Only .codegraph PID/socket tooling artifacts; no checkout, Git directory or local .env.",
+  "notes": [
+    "Only the project checkout moved; unrelated original workspace files and earlier generated output copies were retained.",
+    "No named volume was deleted, no catalog records were edited and no credentials were regenerated.",
+    "Private digests are not included; only preservation comparison results are published.",
+    "The stack restarted from the new Compose path using the existing local image; this was not a fresh image download or new build.",
+    "Independent verification found an older unused /app/start.sh copy inside the image; the executed host bootstrap and application runtime are correct. No rebuild was claimed."
+  ]
+}

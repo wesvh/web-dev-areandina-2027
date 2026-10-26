@@ -4,6 +4,13 @@ Aplicación académica funcional con **Django 5.2 LTS, MySQL 8.4 y Docker Compos
 
 ## Iniciar con un comando
 
+Ubicación de trabajo del autor en macOS, fuera de ChatGPT: `~/Documents/Universidad/festival-vallenato-2027`.
+
+```sh
+cd "$HOME/Documents/Universidad/festival-vallenato-2027"
+./start.sh
+```
+
 Requisitos: Docker con Compose v2, motor iniciado, conexión a internet durante la primera descarga y puerto 8000 libre. Ejecutar desde una terminal macOS/Linux o WSL en Windows:
 
 ```sh
@@ -88,6 +95,6 @@ git clone https://github.com/wesvh/web-dev-areandina-2027.git && cd web-dev-area
 
 El repositorio incluye código, migraciones, pruebas, capturas y el PDF en `reports/Entrega_2_Vallenato_2027_APA.pdf`. Publicar código no aloja la aplicación: cada lector la ejecuta localmente con Docker.
 
-Material de cierre: `reports/GUION_VIDEO.md` contiene texto y acciones para grabar; `reports/CHECKLIST_ENTREGA.md` distingue requisitos cumplidos y pendientes del docente. Las siete capturas actuales son de escritorio, con ventana de 1440×900; dimensiones y rutas constan en `evidence/desktop.json`. El PDF conserva 11 páginas y explica cualquier detalle de cabecera mostrado por separado.
+Material de cierre: `reports/GUION_PASO_A_PASO.md` contiene un recorrido de dos lados con narración, enlaces, comandos y resultados esperados; `reports/GUION_VIDEO.md` conserva el guion resumido. `reports/CHECKLIST_ENTREGA.md` distingue requisitos cumplidos y pendientes del docente. Las siete capturas actuales son de escritorio, con ventana de 1440×900; dimensiones y rutas constan en `evidence/desktop.json`. El PDF conserva 11 páginas y explica cualquier detalle de cabecera mostrado por separado.
 
 La entrega oficial requiere un único PDF con evidencias, enlace al repositorio y video. El programa académico fue confirmado como **DESARROLLO WEB** e incorporado en la portada. Falta el video real y su enlace. La guía exige cuatro participantes; se conserva autor único por indicación del usuario y se advierte que el criterio grupal otorga 0/5 a entregas individuales. La guía recibida no prevé una excepción por trabajar en una empresa. No se ha aportado autorización docente que modifique el requisito, ni se inventa participación o una revisión efectuada por el docente.
