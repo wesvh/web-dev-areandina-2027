@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Iniciar sesión · Festival 2027{% endblock %}
+{% block content %}
+<section class="form-layout"><p class="eyebrow">Tu espacio en el festival</p><h1>Iniciar sesión</h1><p class="lead">Ingresa con tu cuenta para continuar.</p>
+  <form method="post" class="form-card" novalidate>
+    {% csrf_token %}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    {% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}<div class="form-field">{{ field.label_tag }}{{ field }}{% if field.help_text %}<div class="help-text">{{ field.help_text }}</div>{% endif %}{% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}</div>{% endfor %}
+    <button class="button" type="submit">Iniciar sesión</button>
+  </form>
+  <p class="form-footnote">¿Aún no tienes cuenta? <a href="{% url 'accounts:register' %}">Crear cuenta</a></p>
+</section>
+{% endblock %}

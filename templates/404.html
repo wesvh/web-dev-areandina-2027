@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Página no encontrada · Festival 2027{% endblock %}
+{% block content %}<section class="error-page"><p class="eyebrow">Error 404</p><h1>No encontramos esta página</h1><p class="lead">El contenido pudo cambiar o la dirección puede ser incorrecta.</p><a class="button" href="{% url 'catalog:home' %}">Volver al inicio</a></section>{% endblock %}

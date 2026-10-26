@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ediciones · Festival 2027{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Tradición · música · encuentro</p>
+  <h1>Ediciones del Festival</h1>
+  <p class="lead">Explora las ediciones, categorías y votaciones disponibles en este catálogo.</p>
+  <p class="notice"><strong>Demostración académica:</strong> los datos son ficticios. La función de votación aún no está implementada.</p>
+</section>
+<section class="content-section" aria-labelledby="ediciones-titulo">
+  <div class="section-heading"><div><p class="eyebrow">Archivo del festival</p><h2 id="ediciones-titulo">Ediciones</h2></div></div>
+  {% if editions %}
+    <div class="card-grid">
+      {% for edition in editions %}
+        <a class="catalog-card edition-card" href="{% url 'catalog:edition' edition.pk %}">
+          <span class="card-kicker">Edición {{ edition.year }}</span>
+          <h3>{{ edition.name }}</h3>
+          <span class="card-link">Explorar edición <span aria-hidden="true">→</span></span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><h3>Aún no hay ediciones</h3><p>Las ediciones aparecerán aquí cuando se agreguen al catálogo.</p></div>
+  {% endif %}
+</section>
+{% endblock %}

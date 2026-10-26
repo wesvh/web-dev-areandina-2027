@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ category.name }} · Festival 2027{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="{% url 'catalog:home' %}">Ediciones</a><span aria-hidden="true">/</span><a href="{% url 'catalog:edition' category.edition.pk %}">{{ category.edition.name }}</a><span aria-hidden="true">/</span><span aria-current="page">{{ category.name }}</span></nav>
+<section class="page-intro"><p class="eyebrow">Categoría · {{ category.edition.year }}</p><h1>{{ category.name }}</h1>{% if category.description %}<p class="lead">{{ category.description }}</p>{% endif %}<p class="notice">Datos ficticios para demostración. La votación aún no se encuentra habilitada.</p></section>
+<section class="content-section" aria-labelledby="votaciones-titulo"><div class="section-heading"><h2 id="votaciones-titulo">Votaciones</h2></div>
+  {% if polls %}<div class="card-grid">
+    {% for poll in polls %}<a class="catalog-card" href="{% url 'catalog:poll' poll.pk %}"><span class="status-badge">{{ poll.get_status_display }}</span><h3>{{ poll.title }}</h3>{% if poll.description %}<p>{{ poll.description }}</p>{% endif %}<span class="card-link">Consultar opciones <span aria-hidden="true">→</span></span></a>{% endfor %}
+  </div>{% else %}<div class="empty-state"><h3>No hay votaciones disponibles</h3><p>Esta categoría todavía no tiene votaciones para consultar.</p></div>{% endif %}
+</section>
+{% endblock %}

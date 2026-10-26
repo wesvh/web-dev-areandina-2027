@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ edition.name }} · Festival 2027{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="{% url 'catalog:home' %}">Ediciones</a><span aria-hidden="true">/</span><span aria-current="page">{{ edition.name }}</span></nav>
+<section class="page-intro"><p class="eyebrow">Edición {{ edition.year }}</p><h1>{{ edition.name }}</h1><p class="lead">Consulta las categorías que hacen parte de esta edición.</p><p class="notice">Catálogo de demostración con datos ficticios. La votación todavía no está disponible.</p></section>
+<section class="content-section" aria-labelledby="categorias-titulo"><div class="section-heading"><h2 id="categorias-titulo">Categorías</h2></div>
+  {% if categories %}<div class="card-grid">
+    {% for category in categories %}<a class="catalog-card" href="{% url 'catalog:category' category.pk %}"><span class="card-kicker">Categoría</span><h3>{{ category.name }}</h3>{% if category.description %}<p>{{ category.description }}</p>{% endif %}<span class="card-link">Ver votaciones <span aria-hidden="true">→</span></span></a>{% endfor %}
+  </div>{% else %}<div class="empty-state"><h3>No hay categorías en esta edición</h3><p>Vuelve más adelante para consultar nuevas categorías.</p></div>{% endif %}
+</section>
+{% endblock %}

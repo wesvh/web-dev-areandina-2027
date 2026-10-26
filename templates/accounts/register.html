@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Crear cuenta · Festival 2027{% endblock %}
+{% block content %}
+<section class="form-layout"><p class="eyebrow">Participa en la comunidad</p><h1>Crear cuenta</h1><p class="lead">Regístrate para acceder a las funciones disponibles.</p>
+  <form method="post" class="form-card" novalidate>
+    {% csrf_token %}{% if form.non_field_errors %}<div class="form-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+    {% for field in form %}<div class="form-field">{{ field.label_tag }}{{ field }}{% if field.help_text %}<div class="help-text">{{ field.help_text }}</div>{% endif %}{% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}</div>{% endfor %}
+    <button class="button" type="submit">Crear cuenta</button>
+  </form>
+  <p class="form-footnote">¿Ya tienes cuenta? <a href="{% url 'accounts:login' %}">Iniciar sesión</a></p>
+</section>
+{% endblock %}

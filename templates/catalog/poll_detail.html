@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ poll.title }} · Festival 2027{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="{% url 'catalog:home' %}">Ediciones</a><span aria-hidden="true">/</span><a href="{% url 'catalog:edition' poll.category.edition.pk %}">{{ poll.category.edition.name }}</a><span aria-hidden="true">/</span><a href="{% url 'catalog:category' poll.category.pk %}">{{ poll.category.name }}</a><span aria-hidden="true">/</span><span aria-current="page">Votación</span></nav>
+<section class="page-intro"><p class="eyebrow">{{ poll.category.name }} · {{ poll.category.edition.year }}</p><span class="status-badge">{{ poll.get_status_display }}</span><h1>{{ poll.title }}</h1>{% if poll.description %}<p class="lead">{{ poll.description }}</p>{% endif %}<p class="notice">Esta pantalla solo muestra información. No registra votos ni publica resultados.</p></section>
+<section class="content-section" aria-labelledby="opciones-titulo"><div class="section-heading"><h2 id="opciones-titulo">Opciones participantes</h2></div>
+  {% if options %}<div class="option-list">
+    {% for option in options %}<article class="option-card"><span class="option-number" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span><div><h3>{{ option.name }}</h3>{% if option.description %}<p>{{ option.description }}</p>{% endif %}</div></article>{% endfor %}
+  </div>{% else %}<div class="empty-state"><h3>No hay opciones registradas</h3><p>Las opciones aparecerán aquí cuando se agreguen a la votación.</p></div>{% endif %}
+</section>
+{% endblock %}

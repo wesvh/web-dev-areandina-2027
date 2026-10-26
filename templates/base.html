@@ -1,0 +1,47 @@
+<!doctype html>
+{% load static %}
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Catálogo académico del Festival Vallenato 2027">
+  <title>{% block title %}Festival 2027 · Votaciones{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{% url 'catalog:home' %}" aria-label="Festival 2027, inicio">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span class="brand-copy"><strong>Festival 2027</strong><span>Votaciones</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="{% url 'catalog:home' %}">Inicio / Ediciones</a>
+        {% if user.is_staff %}<a href="{% url 'admin:index' %}">Administración</a>{% endif %}
+      </nav>
+      <div class="account-nav">
+        {% if user.is_authenticated %}
+          <span class="user-label">Sesión: {{ user.get_username }}</span>
+          <form method="post" action="{% url 'accounts:logout' %}" class="logout-form">
+            {% csrf_token %}<button class="button button-quiet" type="submit">Cerrar sesión</button>
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}">Iniciar sesión</a>
+          <a class="button button-small" href="{% url 'accounts:register' %}">Crear cuenta</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+  <main id="contenido" class="page-shell">
+    <div class="phase-banner"><span>Entrega 2 · Catálogo funcional</span><span>Proyecto académico</span></div>
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <strong>Esteban Villada Henao</strong>
+      <span>Datos ficticios · Proyecto académico · Fundación Universitaria del Área Andina</span>
+    </div>
+  </footer>
+</body>
+</html>
