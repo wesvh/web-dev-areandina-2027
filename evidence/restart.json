@@ -1,0 +1,24 @@
+{
+  "command": "./start.sh",
+  "after_explicit_web_stop": true,
+  "before": {
+    "editions": 2,
+    "categories": 3,
+    "polls": 4,
+    "options": 4,
+    "evidence_category": [
+      3
+    ]
+  },
+  "after": {
+    "editions": 2,
+    "categories": 3,
+    "polls": 4,
+    "options": 4,
+    "evidence_category": [
+      3
+    ]
+  },
+  "passed": true,
+  "startup_output": "e\n#2 DONE 0.0s\n\n#3 [internal] load metadata for docker.io/library/python:3.12-slim\n#3 DONE 0.2s\n\n#4 [internal] load .dockerignore\n#4 transferring context: 138B done\n#4 DONE 0.0s\n\n#5 [1/7] FROM docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704\n#5 resolve docker.io/library/python:3.12-slim@sha256:a0f57064cbdcd6285fa45f51237ab0b35ea8ebaed06a1f5973e89e19dfb86704 0.0s done\n#5 DONE 0.0s\n\n#6 [internal] load build context\n#6 transferring context: 7.29kB done\n#6 DONE 0.0s\n\n#7 [2/7] WORKDIR /app\n#7 CACHED\n\n#8 [3/7] RUN apt-get update     && apt-get install -y --no-install-recommends build-essential pkg-config default-libmysqlclient-dev     && rm -rf /var/lib/apt/lists/*\n#8 CACHED\n\n#9 [4/7] COPY requirements.txt .\n#9 CACHED\n\n#10 [5/7] RUN pip install --no-cache-dir -r requirements.txt     && useradd --create-home --uid 10001 app\n#10 CACHED\n\n#11 [6/7] COPY --chown=app:app . .\n#11 DONE 0.0s\n\n#12 [7/7] RUN mkdir -p /app/staticfiles && chown app:app /app/staticfiles     && chmod +x /app/docker/entrypoint.sh\n#12 DONE 0.2s\n\n#13 exporting to image\n#13 exporting layers 0.0s done\n#13 exporting manifest sha256:a2a33309a51de0ba1d924dc8a73fe44b723001beb7ccffdfd5aa656d074684ae done\n#13 exporting config sha256:96b1bd9dede23749432fb8cc3790d1113354823cec3d6b74331f7e6794c346c9 done\n#13 exporting attestation manifest sha256:5c38436cd1039ee70deb58a8e35ac3af89ae6b58287c9e6ef6ffaf9f50e9b6b2 done\n#13 exporting manifest list sha256:232473286f4c2392e293bf89117e7d09cb784962d65bdeebb75a59b855f1a0b5 done\n#13 naming to docker.io/library/festival-vallenato-2027-web:latest done\n#13 unpacking to docker.io/library/festival-vallenato-2027-web:latest 0.0s done\n#13 DONE 0.1s\n\n#14 resolving provenance for metadata file\n#14 DONE 0.0s\nApplication is healthy. Open http://localhost:8000/\nAdmin: /admin/ . Local credentials: DEMO_ADMIN_USER and DEMO_ADMIN_PASSWORD in .env.\nNever share .env, credentials or database volumes. This is an academic local environment.\n"
+}

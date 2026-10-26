@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-25T21:55:02.734879-05:00",
+  "checks": [
+    {
+      "name": "Django configuration",
+      "command": "docker compose exec -T web python manage.py check",
+      "exit_code": 0,
+      "output": "System check identified no issues (0 silenced).\n"
+    },
+    {
+      "name": "Committed migrations match models",
+      "command": "docker compose exec -T web python manage.py makemigrations --check --dry-run",
+      "exit_code": 0,
+      "output": "No changes detected\n"
+    },
+    {
+      "name": "Applied migrations",
+      "command": "docker compose exec -T web python manage.py showmigrations",
+      "exit_code": 0,
+      "output": "admin\n [X] 0001_initial\n [X] 0002_logentry_remove_auto_add\n [X] 0003_logentry_add_action_flag_choices\nauth\n [X] 0001_initial\n [X] 0002_alter_permission_name_max_length\n [X] 0003_alter_user_email_max_length\n [X] 0004_alter_user_username_opts\n [X] 0005_alter_user_last_login_null\n [X] 0006_require_contenttypes_0002\n [X] 0007_alter_validators_add_error_messages\n [X] 0008_alter_user_username_max_length\n [X] 0009_alter_user_last_name_max_length\n [X] 0010_alter_group_name_max_length\n [X] 0011_update_proxy_permissions\n [X] 0012_alter_user_first_name_max_length\ncatalog\n [X] 0001_initial\ncontenttypes\n [X] 0001_initial\n [X] 0002_remove_content_type_name\nsessions\n [X] 0001_initial\n"
+    },
+    {
+      "name": "Full Django test suite on MySQL",
+      "command": "docker compose exec -T web python manage.py test --noinput",
+      "exit_code": 0,
+      "output": "Found 23 test(s).\nSystem check identified no issues (0 silenced).\nCatálogo de demostración disponible.\nCatálogo de demostración disponible.\nCatálogo de demostración disponible.\nCatálogo de demostración disponible.\nCreating test database for alias 'default'...\n.......................\n----------------------------------------------------------------------\nRan 23 tests in 2.307s\n\nOK\nDestroying test database for alias 'default'...\n"
+    },
+    {
+      "name": "Database engine and persisted catalog",
+      "command": "docker compose exec -T web python manage.py shell -c import json; from django.db import connection; from catalog.models import Edition,Category,Poll,Option; c=connection.cursor(); c.execute(\"SELECT VERSION()\"); version=c.fetchone()[0]; print(json.dumps({\"vendor\":connection.vendor,\"version\":version,\"editions\":Edition.objects.count(),\"categories\":Category.objects.count(),\"polls\":Poll.objects.count(),\"options\":Option.objects.count()}))",
+      "exit_code": 0,
+      "output": "10 objects imported automatically (use -v 2 for details).\n\n{\"vendor\": \"mysql\", \"version\": \"8.4.13\", \"editions\": 2, \"categories\": 2, \"polls\": 4, \"options\": 4}\n"
+    },
+    {
+      "name": "HTTP /",
+      "exit_code": 0,
+      "output": "200"
+    },
+    {
+      "name": "HTTP /accounts/register/",
+      "exit_code": 0,
+      "output": "200"
+    },
+    {
+      "name": "HTTP /accounts/login/",
+      "exit_code": 0,
+      "output": "200"
+    },
+    {
+      "name": "HTTP /health/",
+      "exit_code": 0,
+      "output": "200"
+    },
+    {
+      "name": "HTTP /static/css/site.css",
+      "exit_code": 0,
+      "output": "200"
+    },
+    {
+      "name": "Container security boundaries",
+      "exit_code": 0,
+      "output": "{\"database_port_unpublished\": true, \"web_loopback_only\": true, \"root_password_absent_from_web\": true, \"debug_disabled\": true}"
+    }
+  ],
+  "passed": true
+}

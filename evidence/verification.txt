@@ -1,0 +1,96 @@
+Django configuration
+docker compose exec -T web python manage.py check
+Exit: 0
+System check identified no issues (0 silenced).
+
+
+Committed migrations match models
+docker compose exec -T web python manage.py makemigrations --check --dry-run
+Exit: 0
+No changes detected
+
+
+Applied migrations
+docker compose exec -T web python manage.py showmigrations
+Exit: 0
+admin
+ [X] 0001_initial
+ [X] 0002_logentry_remove_auto_add
+ [X] 0003_logentry_add_action_flag_choices
+auth
+ [X] 0001_initial
+ [X] 0002_alter_permission_name_max_length
+ [X] 0003_alter_user_email_max_length
+ [X] 0004_alter_user_username_opts
+ [X] 0005_alter_user_last_login_null
+ [X] 0006_require_contenttypes_0002
+ [X] 0007_alter_validators_add_error_messages
+ [X] 0008_alter_user_username_max_length
+ [X] 0009_alter_user_last_name_max_length
+ [X] 0010_alter_group_name_max_length
+ [X] 0011_update_proxy_permissions
+ [X] 0012_alter_user_first_name_max_length
+catalog
+ [X] 0001_initial
+contenttypes
+ [X] 0001_initial
+ [X] 0002_remove_content_type_name
+sessions
+ [X] 0001_initial
+
+
+Full Django test suite on MySQL
+docker compose exec -T web python manage.py test --noinput
+Exit: 0
+Found 23 test(s).
+System check identified no issues (0 silenced).
+Catálogo de demostración disponible.
+Catálogo de demostración disponible.
+Catálogo de demostración disponible.
+Catálogo de demostración disponible.
+Creating test database for alias 'default'...
+.......................
+----------------------------------------------------------------------
+Ran 23 tests in 2.307s
+
+OK
+Destroying test database for alias 'default'...
+
+
+Database engine and persisted catalog
+docker compose exec -T web python manage.py shell -c import json; from django.db import connection; from catalog.models import Edition,Category,Poll,Option; c=connection.cursor(); c.execute("SELECT VERSION()"); version=c.fetchone()[0]; print(json.dumps({"vendor":connection.vendor,"version":version,"editions":Edition.objects.count(),"categories":Category.objects.count(),"polls":Poll.objects.count(),"options":Option.objects.count()}))
+Exit: 0
+10 objects imported automatically (use -v 2 for details).
+
+{"vendor": "mysql", "version": "8.4.13", "editions": 2, "categories": 2, "polls": 4, "options": 4}
+
+
+HTTP /
+
+Exit: 0
+200
+
+HTTP /accounts/register/
+
+Exit: 0
+200
+
+HTTP /accounts/login/
+
+Exit: 0
+200
+
+HTTP /health/
+
+Exit: 0
+200
+
+HTTP /static/css/site.css
+
+Exit: 0
+200
+
+Container security boundaries
+
+Exit: 0
+{"database_port_unpublished": true, "web_loopback_only": true, "root_password_absent_from_web": true, "debug_disabled": true}

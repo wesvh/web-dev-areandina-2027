@@ -41,10 +41,10 @@ Assignment: "PARA ENTREGAS POSTERIORES Registro definitivo de votos, control ava
 Acceptance: secrets ignored by Git and Docker context, database not published to host, application bound to localhost, non-root application user, debug disabled by default, static files served locally. No production deployment or invented verification of inaccessible private links. Video and external-session access checks remain explicitly pending until supplied.
 
 ## Tasks
-- T1 | S2-S4,S6 | delegated backend unit, parallel with T2; Python project/apps/migrations/tests only | in progress | commit pending
-- T2 | S4,S5 | delegated presentation unit, parallel with T1; templates/static only, shared contract below | in progress | commit pending
-- T3 | S1,S2,S6 | inline Docker, startup, docs and integration | pending | commit pending
-- T4 | S1-S6 | inline functional proof, then independent verification for Risk items 2 (authentication) and 5 (container execution); capture evidence and APA report | pending | commit pending
+- T1 | S2-S4,S6 | delegated backend unit, parallel with T2; Python project/apps/migrations/tests only | complete: 23 MySQL tests pass | d7cd887
+- T2 | S4,S5 | delegated presentation unit, parallel with T1; templates/static only, shared contract below | complete: HTTP and real browser flows pass | afdfc3a
+- T3 | S1,S2,S6 | inline Docker, startup, docs and integration | complete: clean startup and stopped-web restart pass without data loss | 1f338f7, caf82e7
+- T4 | S1-S6 | inline functional proof, then independent verification for Risk items 2 (authentication) and 5 (container execution); capture evidence and APA report | in progress: report and captures produced, independent verification pending | commit pending
 - T5 | S1,S5 | inline private GitHub publication only through wesvh, access readback and delivery package | blocked: personal GitHub session unavailable | commit pending
 
 ## Shared implementation contract
@@ -63,3 +63,7 @@ Acceptance: secrets ignored by Git and Docker context, database not published to
 - L4: Existing workspace has only Entrega 1 deliverables and unrelated untracked documents. CodeGraph reports no index and directs filesystem fallback. No project skill registry; installed exact skill paths will be injected. Engram project reads/writes fail with unknown_project; mirror pending, no project guessing.
 - L5: Worker launch refused: configured `gpt-6.1-luna` is unavailable; runtime offers `gpt-6-luna`, among other models. No worker launched and no product code was written. Await user authorization for model substitution; do not bypass the fired delegation boundary inline.
 - L6, 2026-10-25: "Si, continua" authorizes replacing unavailable writer model with `gpt-6-luna`. Continue authorized local implementation; personal GitHub authentication still pending.
+- L7: Backend integration corrected missing static directory discovery and missing seeded admin creation; regression tests added. No meaningful framework RED run was observed before initial code because the Docker runner did not exist; do not claim TDD RED/GREEN. Full suite subsequently ran against MySQL 8.4.13: 23 tests passed; configuration, migration drift and HTTP/static checks passed.
+- L8: Real browser registration, login, POST logout, Admin category creation and dynamic public visibility verified. Category ID 3 persisted after stopping web and running the single startup command again. Mobile DOM measured at effective width 360 without horizontal overflow; only unaltered default-viewport JPEG captures are retained. Report layout shows explicitly described fragments for legibility.
+- L9: The local Docker credential helper stalled a public image pull. Verification used an isolated anonymous Docker client configuration against the same local Unix-socket engine, without using registry credentials or changing global Docker settings. Temporary client directory must be removed after checks. Fresh installation otherwise requires working access to public registries as documented.
+- L10: Runtime commits are larger coherent bootstrap units (backend plus tests: 832 lines; presentation: 274; infrastructure/docs: 371), not separate PR deliveries. No PR requested or created; RDD globally disabled. Existing workspace files and Entrega 1 were not committed or changed.
