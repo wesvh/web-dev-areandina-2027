@@ -9,7 +9,7 @@ Fecha: 25 de octubre de 2026. Candidato de ejecución: `cfe938d25c1809fe4c7e2f85
 - Arranque desde cero mediante `./start.sh`: aplicación saludable.
 - `docker compose exec -T web python manage.py test --noinput`: **23 de 23 pruebas aprobadas** contra MySQL real.
 - `python manage.py check`: sin problemas; `makemigrations --check --dry-run`: sin cambios pendientes.
-- Registro sin privilegios, contraseñas cifradas mediante hash, restricciones de administrador y redirecciones seguras: aprobados.
+- Registro sin privilegios, contraseñas almacenadas mediante hash, restricciones de administrador y redirecciones seguras: aprobados.
 - Registro, inicio y cierre de sesión sin token CSRF: HTTP 403. Cierre de sesión mediante GET: HTTP 405.
 - Catálogo público, CSS y CSS de Admin: HTTP 200. Las votaciones en borrador no se exponen por identificador.
 - Reinicio después de detener web: conservó registros, edición modificada y hash de contraseña del administrador; el hash no se incluye en esta evidencia.
