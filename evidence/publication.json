@@ -19,6 +19,9 @@
     "desktop_manifest": "evidence/desktop.json",
     "video_script": "reports/GUION_VIDEO.md",
     "teacher_checklist": "reports/CHECKLIST_ENTREGA.md",
+    "verified_desktop_commit": "47f9ae34962af93ee63fcc929e4973da70f8ac3d",
+    "anonymous_desktop_pdf_script_checklist_capture_http_status": 200,
+    "anonymous_desktop_files_match_local_bytes": true,
     "note": "The verified_report_commit above records the earlier public-read check, not the later desktop-layout revision."
   },
   "limitations": [
