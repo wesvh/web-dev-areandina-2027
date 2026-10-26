@@ -95,5 +95,7 @@ Publicar el código en GitHub no aloja la aplicación en internet. No afirmar pa
 1. Revisar legibilidad, audio y ausencia de credenciales o datos personales.
 2. Subir el video y habilitar consulta para el docente. Comprobar el enlace desde otra sesión.
 3. Incorporar el enlace real y clicable en el PDF; no entregar este guion como sustituto del video.
-4. Completar el programa académico en la portada y revisar la advertencia de trabajo grupal.
+4. Comprobar que la portada indique **Programa académico: DESARROLLO WEB**, confirmado por el autor, y revisar la advertencia de trabajo grupal.
 5. Enviar el único PDF oficial en la plataforma antes del plazo: **26 de octubre de 2026**. La guía indica que cada integrante realiza su envío.
+
+La guía suministrada no contiene una excepción por trabajar en una empresa. Cualquier solicitud de entregar individualmente sería una petición al docente, no un permiso ya otorgado. Si existe una comunicación adicional, debe revisarse antes de afirmar una modificación del requisito o de la rúbrica.

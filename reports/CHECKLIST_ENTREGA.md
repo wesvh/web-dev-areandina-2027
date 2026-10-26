@@ -2,7 +2,7 @@
 
 Revisión: 26 de octubre de 2026. Fuente: guía suministrada por el usuario, **Entrega 2 - Festival Vallenato 2027**, secciones 02, 03, 05, 06, 07 y 08. La fecha máxima indicada es **26 de octubre de 2026**; no se especifica hora en la guía.
 
-**Estado global: implementación técnica lista y verificada; entrega académica todavía incompleta.** Faltan programa académico, video real con enlace incorporado y envío oficial. Además, la entrega individual no cumple el requisito obligatorio de cuatro integrantes.
+**Estado global: implementación técnica lista y verificada; entrega académica todavía incompleta.** Programa académico confirmado e incorporado: **DESARROLLO WEB**. Faltan video real con enlace incorporado y envío oficial. Además, la entrega individual no cumple el requisito obligatorio de cuatro integrantes.
 
 ## Requisitos técnicos
 
@@ -21,7 +21,7 @@ Revisión: 26 de octubre de 2026. Fuente: guía suministrada por el usuario, **E
 
 | Solicitud del docente | Estado | Qué falta o cómo se comprueba |
 |---|---|---|
-| Único PDF con portada, introducción, objetivo y desarrollo técnico | PARCIAL | PDF de 11 páginas preparado; falta el nombre exacto del programa académico. |
+| Único PDF con portada, introducción, objetivo y desarrollo técnico | CHECK | PDF de 11 páginas preparado; programa **DESARROLLO WEB** incorporado. La falta de cuatro integrantes se evalúa por separado en la fila siguiente. |
 | Nombres completos de cuatro integrantes | NO CUMPLE | El usuario solicitó conservar solo a Esteban Villada Henao. No se inventaron compañeros ni una excepción. |
 | Capturas legibles y comentadas de Admin, datos, interfaz y operaciones | CHECK | Siete capturas reales de escritorio, ventana 1440×900; figuras explicadas. Un detalle de cabecera de sesión está identificado como tal. |
 | Fragmentos relevantes de código, sin copiar todo el proyecto | CHECK | Modelo y autenticación extraídos del código real en el PDF. |
@@ -39,10 +39,12 @@ Revisión: 26 de octubre de 2026. Fuente: guía suministrada por el usuario, **E
 |---|---:|---|
 | Django, conexión MySQL y modelo de datos | 5 | Implementado y verificado; calificación final depende del docente. |
 | Autenticación y administración de entidades | 6 | Implementado y verificado; debe demostrarse en video. |
-| Interfaces dinámicas, funcionamiento y evidencias: PDF, repositorio y video | 4 | Parcial mientras falte video, su enlace y completar portada. No se calcula una nota parcial no definida por la guía. |
+| Interfaces dinámicas, funcionamiento y evidencias: PDF, repositorio y video | 4 | Parcial mientras falte video y su enlace. No se calcula una nota parcial no definida por la guía. |
 | Trabajo en equipo y participación demostrable de cuatro integrantes | 5 | La guía establece **0/5 para entregas individuales**. |
 
 La implementación por sí sola no garantiza 20/20. Si la entrega sigue siendo individual, el máximo aritmético es **15/20**, incluso con puntuación completa en los otros tres criterios. No se presume una excepción aprobada por el docente.
+
+**Sobre una excepción por empresa:** no figura en la guía recibida. Solicitar una autorización escrita al docente sería una posibilidad de consulta, no una excepción existente ni concedida. Para depender de ella habría que recibir una respuesta que autorice el cambio de modalidad y aclare cómo se evaluará el criterio grupal. No se dispone de esa comunicación.
 
 ## No se exige todavía
 
@@ -50,7 +52,7 @@ Registro definitivo de votos, control avanzado de duplicados, elegibilidad compl
 
 ## Orden para cerrar pendientes
 
-1. Confirmar el programa académico exacto para completar portada.
+1. Revisar la portada ya completada con el programa **DESARROLLO WEB**.
 2. Resolver con el docente la entrega individual o incorporar participación real de cuatro integrantes; no cambiar nombres ficticiamente.
 3. Grabar siguiendo `reports/GUION_VIDEO.md`, publicar y verificar el enlace desde otra sesión.
 4. Insertar enlace del video en el PDF y revisar todos los campos pendientes.
