@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-26",
+  "repository": "https://github.com/wesvh/web-dev-areandina-2027",
+  "visibility": "public",
+  "authorization": "debe ser publico, subelo",
+  "branch": "master",
+  "transport": "personal SSH identity wesvh",
+  "verified_report_commit": "6e73d9688949192422e5f919531d272d77dc4f68",
+  "independently_verified_runtime_commit": "cfe938d25c1809fe4c7e2f85c454d1359f4a2218",
+  "anonymous_report_http_status": 200,
+  "anonymous_report_matches_local_bytes": true,
+  "pdf_pages": 11,
+  "pre_upload_historical_blobs_scanned": 63,
+  "checked_credential_findings": 0,
+  "zip_integrity_passed": true,
+  "local_secrets_excluded": true,
+  "limitations": [
+    "Credential scanning covers checked patterns and known local secrets, not every possible secret.",
+    "GitHub hosts the source code, not the running Django application.",
+    "Academic program and actual demonstration video remain pending."
+  ]
+}
