@@ -111,7 +111,7 @@ paragraph('Programa académico: pendiente de confirmar',center)
 story.append(Spacer(1,24))
 paragraph('Desarrollo Web',center)
 paragraph('Docente: DEIVYS MORALES URIBE',center)
-paragraph('25 de octubre de 2026',center)
+paragraph('26 de octubre de 2026',center)
 
 section('Introducción y objetivo')
 paragraph('La segunda entrega convierte el diseño inicial en una aplicación Django MVT conectada a MySQL. Implementa autenticación, administración del catálogo y consulta pública dinámica. Las ediciones, categorías, votaciones y opciones son datos ficticios; la emisión de votos corresponde a etapas posteriores (<i>Entrega 2 - Festival Vallenato 2027</i>, 2026).')
@@ -180,11 +180,11 @@ figure('La categoría registrada en Admin aparece en la interfaz pública',
        'Fragmentos de la consulta pública de 2027. Aparece Evidencia de persistencia - ficticia, creada desde Admin. Después de detener web y arrancar con ./start.sh se conservaron tres categorías, cuatro votaciones y cuatro opciones; la categoría mantuvo ID 3.')
 
 section('Repositorio, video y conclusiones')
-paragraph('<b>Destino autorizado del repositorio:</b> <link href="https://github.com/wesvh/festival-vallenato-2027">https://github.com/wesvh/festival-vallenato-2027</link>. Debe ser privado. <b>Publicación pendiente:</b> la cuenta personal wesvh no está autenticada en GitHub CLI; no se utilizó la sesión corporativa. Este enlace identifica el destino, no certifica que ya exista o sea accesible.')
+paragraph('<b>Repositorio público:</b> <link href="https://github.com/wesvh/web-dev-areandina-2027">https://github.com/wesvh/web-dev-areandina-2027</link>. Código, migraciones, pruebas y evidencias publicados en la rama master mediante SSH de la cuenta personal wesvh. La publicación pública fue autorizada expresamente el 26 de octubre de 2026. El README explica la ejecución local con Docker; publicar el código no implica alojar la aplicación en internet.')
 paragraph('<b>Video:</b> enlace pendiente de proporcionar. Se incluye un guion de grabación en el proyecto; no se inventó una demostración grabada ni la participación de otras personas. Antes del envío, publicar el video con permisos para el docente y reemplazar este pendiente.')
 paragraph('Se logró una base ejecutable con relaciones persistentes, autenticación nativa, administración y consulta dinámica. Las pruebas y el reinicio respaldan el alcance funcional; no prueban seguridad productiva, carga ni reglas definitivas de votación.')
 paragraph('<b>Responsabilidades:</b> Esteban Villada Henao figura como único autor, responsable de revisar y justificar análisis, código, pruebas y evidencias. Se utilizó IA como apoyo técnico. La guía exige cuatro integrantes y establece 0/5 en el criterio de trabajo grupal para entregas individuales; esta presentación no declara una excepción aprobada.')
-paragraph('<b>Antes de entregar:</b> completar programa académico, publicación del repositorio, acceso externo del docente y enlace del video. Registro definitivo de votos, resultados, elegibilidad avanzada y producción quedan para próximas fases.')
+paragraph('<b>Antes de entregar:</b> completar programa académico y enlace del video; verificar permisos del video desde otra sesión. El repositorio es público y no requiere invitación para consultar el código. Registro definitivo de votos, resultados, elegibilidad avanzada y producción quedan para próximas fases.')
 
 section('Referencias')
 refs=[

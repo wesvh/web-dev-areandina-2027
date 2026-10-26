@@ -8,6 +8,6 @@ Duración orientativa: 4 a 6 minutos. Grabar la aplicación funcionando; no pres
 4. Registrar una cuenta ficticia, iniciar y cerrar sesión. Pausar o recortar la entrada de contraseñas; no mostrar credenciales en pantalla.
 5. Acceder a Django Admin fuera de la grabación de credenciales. Crear una categoría o editar una descripción y mostrar el cambio en el catálogo público.
 6. Mostrar pruebas aprobadas y migraciones aplicadas. Explicar modelos relacionados y un fragmento breve de vista ORM.
-7. Concluir con pendientes de votación y producción. Mostrar repositorio privado solo después de publicar y conceder acceso al docente.
+7. Concluir con pendientes de votación y producción. Mostrar el repositorio público https://github.com/wesvh/web-dev-areandina-2027 y explicar cómo ejecutar la aplicación con Docker; no mostrar credenciales locales.
 
 La guía exige participación demostrable de cuatro integrantes. El usuario pidió conservar autor único; este guion no inventa otras personas ni una excepción aprobada. Grabar y aportar el enlace sigue pendiente. Verificar sus permisos desde otra sesión antes de incorporarlo al PDF oficial.

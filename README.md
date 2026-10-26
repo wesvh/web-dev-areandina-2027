@@ -74,10 +74,18 @@ Los datos permanecen en un volumen nombrado. **No usar `docker compose down -v` 
 
 Aplicación enlazada únicamente a `127.0.0.1`, MySQL sin puerto publicado, usuario no root en web, `DEBUG=False`, secretos fuera de Git y del contexto de construcción. El usuario web no recibe la contraseña root de MySQL. El permiso adicional `test_festival.*` es exclusivo de este entorno académico para ejecutar pruebas.
 
-Esto **no es un despliegue productivo**: no incluye TLS, correo de recuperación, política institucional de datos, protección avanzada contra abuso ni respaldo operacional. No introducir información personal real. El docente debe recibir los archivos o clonar el repositorio privado después de obtener acceso; que exista un enlace privado no garantiza sus permisos.
+Esto **no es un despliegue productivo**: no incluye TLS, correo de recuperación, política institucional de datos, protección avanzada contra abuso ni respaldo operacional. No introducir información personal real. El código es público por autorización expresa; las credenciales y bases de datos locales no se publican.
 
 ## Repositorio y entrega académica
 
-Destino autorizado: **repositorio privado** `wesvh/festival-vallenato-2027`. Publicación pendiente de autenticar esa cuenta personal en GitHub CLI; no se utilizará una sesión corporativa.
+Repositorio **público**: [wesvh/web-dev-areandina-2027](https://github.com/wesvh/web-dev-areandina-2027), rama `master`. Publicado mediante SSH de la cuenta personal `wesvh`; no se utilizó una sesión corporativa. La autorización del 26 de octubre de 2026 reemplaza la solicitud inicial de privacidad.
 
-La entrega oficial requiere un único PDF con evidencias, enlace al repositorio y video. El video y el nombre del programa académico no han sido proporcionados: se mantienen pendientes. La guía exige cuatro participantes; se conserva autor único por indicación del usuario y se advierte que el criterio grupal otorga 0/5 a entregas individuales. No se inventa participación ni acceso verificado del docente.
+Para descargar y ejecutar, con Git y Docker disponibles:
+
+```sh
+git clone https://github.com/wesvh/web-dev-areandina-2027.git && cd web-dev-areandina-2027 && ./start.sh
+```
+
+El repositorio incluye código, migraciones, pruebas, capturas y el PDF en `reports/Entrega_2_Vallenato_2027_APA.pdf`. Publicar código no aloja la aplicación: cada lector la ejecuta localmente con Docker.
+
+La entrega oficial requiere un único PDF con evidencias, enlace al repositorio y video. El video y el nombre del programa académico no han sido proporcionados: se mantienen pendientes. La guía exige cuatro participantes; se conserva autor único por indicación del usuario y se advierte que el criterio grupal otorga 0/5 a entregas individuales. No se inventa participación ni una revisión efectuada por el docente.

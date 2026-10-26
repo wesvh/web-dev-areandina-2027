@@ -1,12 +1,14 @@
 # Entrega 2 - Festival Vallenato 2027
-Outcome: runnable Django/MySQL application, one-command Docker startup, real screenshot evidence and concise APA report. Branch: `codex/entrega-2`. Delivery: local repository and private `wesvh/festival-vallenato-2027`; no PR requested. Runner: Django tests against MySQL in Docker.
+Outcome: runnable Django/MySQL application, one-command Docker startup, real screenshot evidence and concise APA report. Local branch: `codex/entrega-2`; public delivery: `wesvh/web-dev-areandina-2027`, remote branch `master`; no PR requested. Runner: Django tests against MySQL in Docker.
 Forecast: about 1,500 authored lines across backend, templates, startup and verification. Engram mirror: pending; provider rejects the detected `universidad` project. Existing Entrega 1 artifacts remain unchanged.
 
 ## Specs
-### S1 - Execution and private repository
+### S1 - Execution and public repository
 User: "Considera pantallazos del documento, considera tambien ejecutable, github, docker para ejecuciuion, migraciones automaticas, para dejar el sistema a punto con 1 solo comando".
 User: "Si, pero el repo privsdo y mi cuenta personal es wesvh".
-Acceptance: `./start.sh` initializes ignored local secrets, builds and starts MySQL and Django, applies committed migrations and seeds fictional sample data without manual configuration. Docker with Compose and internet for first image download are prerequisites. Restarts preserve existing records. README explains URLs, credentials location, tests and stopping without deleting volumes. Only the explicitly authorized personal account may publish the private repository.
+User correction, 2026-10-26: "Lo cree asi web-dev-areandina-2027" and "https://github.com/wesvh/web-dev-areandina-2027".
+User correction, 2026-10-26: "debe ser publico, subelo". This supersedes the earlier private requirement.
+Acceptance: `./start.sh` initializes ignored local secrets, builds and starts MySQL and Django, applies committed migrations and seeds fictional sample data without manual configuration. Docker with Compose and internet for first image download are prerequisites. Restarts preserve existing records. README explains URLs, credentials location, tests and stopping without deleting volumes. Publish publicly only to `wesvh/web-dev-areandina-2027` through the confirmed personal SSH identity, audit history for secrets, verify remote commit and update report/package links.
 
 ### S2 - Django and MySQL
 Assignment: "Proyecto Django: crear el proyecto, organizar aplicaciones, configurar rutas, vistas y plantillas."
@@ -38,14 +40,14 @@ Acceptance: concise Spanish APA PDF with Esteban Villada Henao as sole author, s
 ### S6 - Safety and bounds
 Assignment: "No incluir contraseñas, tokens, claves privadas ni credenciales de MySQL. Utilizar datos de prueba."
 Assignment: "PARA ENTREGAS POSTERIORES Registro definitivo de votos, control avanzado de duplicados, reglas completas de elegibilidad, publicación final de resultados, auditoría avanzada, pruebas de carga y despliegue productivo."
-Acceptance: secrets ignored by Git and Docker context, database not published to host, application bound to localhost, non-root application user, debug disabled by default, static files served locally. No production deployment or invented verification of inaccessible private links. Video and external-session access checks remain explicitly pending until supplied.
+Acceptance: secrets ignored by Git and Docker context, database not published to host, application bound to localhost, non-root application user, debug disabled by default, static files served locally. No production deployment or invented verification of links. Repository public-read checks must be observed; video access checks remain explicitly pending until supplied.
 
 ## Tasks
 - T1 | S2-S4,S6 | delegated backend unit, parallel with T2; Python project/apps/migrations/tests only | complete: 23 MySQL tests pass | d7cd887
 - T2 | S4,S5 | delegated presentation unit, parallel with T1; templates/static only, shared contract below | complete: HTTP and real browser flows pass | afdfc3a
 - T3 | S1,S2,S6 | inline Docker, startup, docs and integration | complete: clean startup and stopped-web restart pass without data loss | 1f338f7, caf82e7
 - T4 | S1-S6 | inline functional proof, then independent verification for Risk items 2 (authentication) and 5 (container execution); capture evidence and APA report | complete locally: 23/23 tests in both stacks, independent PASS, 11-page PDF visually checked; external report fields remain pending | 0d4f877, cfe938d; final verification record in closing documentation commit
-- T5 | S1,S5 | inline private GitHub publication only through wesvh, access readback and delivery package | blocked: personal GitHub session unavailable | commit pending
+- T5 | S1,S5 | inline public GitHub publication through personal wesvh SSH, access readback and delivery package | in progress: initial audited history pushed to master; report/link update and final readback pending | initial upload 270b783; closing documentation commit pending
 
 ## Shared implementation contract
 - Repository root: `festival-vallenato-2027/`. Config package `config`; apps `accounts`, `catalog`.
@@ -70,3 +72,5 @@ Acceptance: secrets ignored by Git and Docker context, database not published to
 - L11: Independent verifier checked frozen runtime candidate cfe938d25c1809fe4c7e2f85c454d1359f4a2218 in a fresh system-temporary checkout and isolated Docker project. Fresh startup, 23/23 MySQL tests, migration drift, auth/CSRF/admin/static checks, container restrictions and restart persistence passed. No reproducible blockers. Native assessment with explicit base reported high risk; RDD remains disabled/unmanaged, with no review receipt claimed.
 - L12: Parent spot check reran Django check successfully and confirmed original database counts [2,3,4,4] plus category ID 3 against evidence/restart.json. Independent test database was removed separately; main database volume remains intact. Final deliverable package uses tracked files only, excluding local secrets and Git metadata.
 - L13: PDF has 11 Letter pages, correct sole author/professor and real screenshot fragments. Program, demonstration video, private publication and teacher access are explicitly pending. No public repository, invented video or team participation is claimed. Engram summary/context still reject detected project; recovery log remains local.
+- L14, 2026-10-26: "Lo cree asi web-dev-areandina-2027" and "https://github.com/wesvh/web-dev-areandina-2027". Personal SSH alias github-wesvh confirmed account wesvh. New repository was public and empty; upload initially paused because the earlier requirement was private.
+- L15, 2026-10-26: "debe ser publico, subelo" explicitly authorizes public upload and replaces privacy requirement. Scanned 63 historical blobs before first transfer: no matches for generated local secrets, checked private-key/token patterns or tracked .env. Initial upload 270b783 to remote master succeeded without force using only personal SSH. Runtime code unchanged from independently verified candidate cfe938d; only delivery documents/report require updates. No new runtime RED applies to passive link/status changes; structural and remote-readback checks apply.

@@ -21,9 +21,9 @@ El autor repitió `check` en el sistema principal: sin problemas. Comparó sus r
 
 ## Límites y pendientes
 
-- GitHub privado en `wesvh/festival-vallenato-2027`: destino autorizado, **todavía no publicado**. Falta autenticar la cuenta personal; no se utilizó la cuenta corporativa disponible.
+- Actualización del 26 de octubre de 2026: el usuario autorizó publicación **pública**, reemplazando su solicitud inicial de privacidad. Código publicado en https://github.com/wesvh/web-dev-areandina-2027, rama `master`, mediante SSH personal `wesvh`. El historial se revisó antes de subirlo: sin coincidencias con secretos locales ni los patrones de credenciales comprobados. Esta revisión no afirma detectar todo secreto posible.
 - Falta nombre del programa académico y enlace real del video.
-- Permisos del docente y apertura del repositorio desde otra sesión: pendientes después de publicar.
+- El repositorio público permite consultar código sin invitación. El acceso y permisos del futuro video siguen pendientes; no se afirma que el docente haya revisado la entrega.
 - Entrega individual por solicitud expresa; la rúbrica exige cuatro integrantes y el criterio de equipo vale 5 puntos de 20.
 - No se afirma RED/GREEN inicial: el runner Docker no existía cuando se escribió el primer código. Se registran únicamente resultados efectivamente observados.
 - RDD está desactivado. La evaluación de riesgo fue alta por autenticación y entorno Docker; la verificación funcional independiente no constituye un recibo nativo de revisión.
