@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -66,3 +67,30 @@ class Option(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Vote(models.Model):
+    """One vote per user, category and edition, enforced by the database."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="votes"
+    )
+    edition = models.ForeignKey(Edition, on_delete=models.PROTECT, related_name="votes")
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="votes")
+    poll = models.ForeignKey(Poll, on_delete=models.PROTECT, related_name="votes")
+    option = models.ForeignKey(Option, on_delete=models.PROTECT, related_name="votes")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "category", "edition"],
+                name="unique_vote_per_user_category_edition",
+            )
+        ]
+        verbose_name = "voto"
+        verbose_name_plural = "votos"
+
+    def __str__(self):
+        return f"{self.user} → {self.option} ({self.category})"
