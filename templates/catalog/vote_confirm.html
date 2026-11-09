@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar voto · Festival 2027{% endblock %}
+{% block content %}
+<nav class="breadcrumbs" aria-label="Ruta de navegación"><a href="{% url 'catalog:home' %}">Ediciones</a><span aria-hidden="true">/</span><a href="{% url 'catalog:category' poll.category.pk %}">{{ poll.category.name }}</a><span aria-hidden="true">/</span><a href="{% url 'catalog:poll' poll.pk %}">{{ poll.title }}</a><span aria-hidden="true">/</span><span aria-current="page">Confirmar</span></nav>
+<section class="page-intro"><p class="eyebrow">{{ poll.category.name }} · {{ poll.category.edition.year }}</p><h1>Confirmar voto</h1>
+  <p class="lead">Vas a votar por <strong>{{ option.name }}</strong> en «{{ poll.title }}».</p>
+  <p class="notice">Después de confirmar no podrás votar de nuevo en la categoría {{ poll.category.name }} de la edición {{ poll.category.edition.year }}.</p>
+</section>
+<section class="content-section">
+  <form method="post" action="{% url 'catalog:vote' poll.pk %}" class="confirm-actions">{% csrf_token %}
+    <input type="hidden" name="option" value="{{ option.pk }}">
+    <input type="hidden" name="confirm" value="1">
+    <button class="button" type="submit">Confirmar voto</button>
+    <a class="button button-quiet" href="{% url 'catalog:poll' poll.pk %}">Cancelar</a>
+  </form>
+</section>
+{% endblock %}

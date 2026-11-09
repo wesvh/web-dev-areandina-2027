@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Edition, Option, Poll
+from .models import Category, Edition, Option, Poll, Vote
 
 
 class CategoryInline(admin.TabularInline):
@@ -47,3 +47,23 @@ class OptionAdmin(admin.ModelAdmin):
     list_display = ("name", "poll")
     list_filter = ("poll__category__edition", "poll__status")
     search_fields = ("name", "description", "poll__title")
+
+
+@admin.register(Vote)
+class VoteAdmin(admin.ModelAdmin):
+    """Read-only audit of stored votes."""
+
+    list_display = ("user", "edition", "category", "poll", "option", "created_at")
+    list_filter = ("edition", "category", "poll")
+    search_fields = ("user__username", "option__name", "category__name")
+    list_select_related = ("user", "edition", "category", "poll", "option")
+    date_hierarchy = "created_at"
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

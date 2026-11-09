@@ -18,6 +18,8 @@
       </a>
       <nav class="site-nav" aria-label="Navegación principal">
         <a href="{% url 'catalog:home' %}">Inicio / Ediciones</a>
+        {% if user.is_authenticated %}<a href="{% url 'catalog:my-votes' %}">Mis votos</a>{% endif %}
+        <a href="{% url 'catalog:api-categories' %}">API JSON</a>
         {% if user.is_staff %}<a href="{% url 'admin:index' %}">Administración</a>{% endif %}
       </nav>
       <div class="account-nav">
@@ -34,7 +36,8 @@
     </div>
   </header>
   <main id="contenido" class="page-shell">
-    <div class="phase-banner"><span>Entrega 2 · Catálogo funcional</span><span>Proyecto académico</span></div>
+    <div class="phase-banner"><span>Entrega 3 · Módulo de votaciones</span><span>Proyecto académico</span></div>
+    {% if messages %}<div class="messages" role="status">{% for message in messages %}<p class="message message-{{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
     {% block content %}{% endblock %}
   </main>
   <footer class="site-footer">

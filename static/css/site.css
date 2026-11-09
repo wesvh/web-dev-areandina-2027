@@ -121,3 +121,21 @@ p { margin: .55rem 0 1rem; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+/* Entrega 3: voting module */
+.messages { display: grid; gap: .5rem; margin: 1rem 0; }
+.message { margin: 0; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: .35rem; background: var(--paper); font-weight: 600; }
+.message-success, .notice-success { border-color: #9cc5a4; background: var(--green-100); color: var(--green-950); }
+.message-error { border-color: #d9a3a3; background: #fbecec; color: #6b1f1f; }
+.vote-form { display: grid; gap: 1.2rem; }
+.vote-form fieldset { margin: 0; padding: 0; border: 0; }
+.option-choice { cursor: pointer; }
+.option-choice input { margin-top: .3rem; width: 1.15rem; height: 1.15rem; accent-color: var(--green-950); }
+.option-choice:has(input:checked) { border-color: var(--green-950); box-shadow: 0 0 0 2px var(--green-100); }
+.option-name { display: block; font-size: 1.05rem; }
+.option-description { display: block; margin-top: .25rem; color: #5b5f57; }
+.confirm-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.table-wrap { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; background: var(--paper); }
+.data-table th, .data-table td { padding: .7rem .8rem; border-bottom: 1px solid var(--line); text-align: left; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

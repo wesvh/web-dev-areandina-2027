@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Mis votos · Festival 2027{% endblock %}
+{% block content %}
+<section class="page-intro"><p class="eyebrow">Participación</p><h1>Mis votos</h1><p class="lead">Categorías en las que ya registraste tu voto.</p></section>
+<section class="content-section" aria-labelledby="votos-titulo"><div class="section-heading"><h2 id="votos-titulo">Categorías votadas</h2></div>
+  {% if votes %}<div class="table-wrap"><table class="data-table">
+    <thead><tr><th scope="col">Edición</th><th scope="col">Categoría</th><th scope="col">Votación</th><th scope="col">Opción elegida</th><th scope="col">Fecha</th></tr></thead>
+    <tbody>{% for vote in votes %}<tr><td>{{ vote.edition.year }}</td><td><a href="{% url 'catalog:category' vote.category.pk %}">{{ vote.category.name }}</a></td><td>{{ vote.poll.title }}</td><td>{{ vote.option.name }}</td><td>{{ vote.created_at|date:"Y-m-d H:i" }}</td></tr>{% endfor %}</tbody>
+  </table></div>{% else %}<div class="empty-state"><h3>Aún no has votado</h3><p>Elige una <a href="{% url 'catalog:home' %}">edición</a> y una categoría para registrar tu voto.</p></div>{% endif %}
+</section>
+{% endblock %}
