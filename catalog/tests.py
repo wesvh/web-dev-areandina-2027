@@ -177,3 +177,27 @@ class DemoSeedCommandTests(TestCase):
                 Poll.objects.filter(category__edition=edition, status=Poll.Status.OPEN).exists()
             )
             self.assertTrue(Option.objects.filter(poll__category__edition=edition).exists())
+
+    def test_seed_covers_voting_scenarios_for_each_edition(self):
+        with patch.dict(
+            os.environ,
+            {"DEMO_ADMIN_USER": "seeded-admin", "DEMO_ADMIN_PASSWORD": "New-admin-pass-2027"},
+        ):
+            call_command("seed_demo", verbosity=0)
+
+        for year in (2027, 2028):
+            open_polls = Poll.objects.filter(
+                category__edition__year=year, status=Poll.Status.OPEN, options__isnull=False
+            ).distinct()
+            per_category = {}
+            for poll in open_polls:
+                per_category[poll.category_id] = per_category.get(poll.category_id, 0) + 1
+            self.assertGreaterEqual(len(per_category), 2)
+            self.assertGreaterEqual(max(per_category.values()), 2)
+            self.assertTrue(
+                Poll.objects.filter(
+                    category__edition__year=year,
+                    status=Poll.Status.CLOSED,
+                    options__isnull=False,
+                ).exists()
+            )

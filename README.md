@@ -1,6 +1,6 @@
-# Festival Vallenato 2027 - Entrega 2
+# Festival Vallenato 2027 - Entrega 3
 
-Aplicación académica funcional con **Django 5.2 LTS, MySQL 8.4 y Docker Compose**. Datos ficticios, no oficiales. Autor: **Esteban Villada Henao**. Docente: **DEIVYS MORALES URIBE**.
+Aplicación académica funcional con **Python 3.12, Django 5.2 LTS, MySQL 8.4 y Docker Compose**. Dependencias Python en `requirements.txt`. Datos ficticios, no oficiales. Autor: **Esteban Villada Henao**. Docente: **DEIVYS MORALES URIBE**.
 
 ## Iniciar con un comando
 
@@ -35,15 +35,58 @@ Si 8000 está ocupado, modificar únicamente `WEB_PORT` en `.env` y ejecutar otr
 - Votaciones en borrador ocultas en interfaces públicas y en accesos directos.
 - Datos de ejemplo de 2027 y 2028; estados vacíos y errores 404.
 - Interfaz responsive sin recursos remotos; estáticos mediante WhiteNoise.
+- **Entrega 3:** emisión de votos con confirmación, un voto por usuario, categoría y edición, página «Mis votos», consulta administrativa de votos y `GET /api/categorias/` en JSON.
 
-No incluye todavía emisión de votos, resultados oficiales, jurados ni controles definitivos de elegibilidad. El diseño conserva esa ampliación para fases posteriores.
+No incluye resultados oficiales, jurados ni controles definitivos de elegibilidad.
+
+## Módulo de votaciones (Entrega 3)
+
+Regla central: cada usuario elige **una sola opción por categoría y edición**. Puede votar en otras categorías, pero no emitir un segundo voto en la misma categoría aunque esta tenga varios subeventos (votaciones).
+
+Flujo: iniciar sesión → elegir categoría → abrir una votación → seleccionar una opción → **confirmar** → validación en Django → registro en MySQL.
+
+- Formulario POST con token CSRF en `templates/catalog/poll_detail.html`; paso de confirmación en `templates/catalog/vote_confirm.html`; vista `vote` en `catalog/views.py`.
+- Validaciones del servidor en `catalog/voting.py`: sesión iniciada, votación habilitada (estado «Abierta»), opción perteneciente a la votación y ausencia de un voto previo en la categoría. Edición, categoría y votación se derivan de la opción en el servidor; nunca se toman del cliente.
+- Unicidad en base de datos: modelo `Vote` en `catalog/models.py` con `UniqueConstraint(fields=["user", "category", "edition"])` (migración `catalog/migrations/0002_vote.py`). `cast_vote` en `catalog/voting.py` captura `IntegrityError`, de modo que dos solicitudes simultáneas almacenan un único voto.
+- «Mis votos»: `/my-votes/`, solo para usuarios autenticados, muestra únicamente los votos propios.
+- Administración: Django Admin → Votos, de solo lectura (sin alta, edición ni borrado), con filtros por edición, categoría y votación.
+- API: `GET /api/categorias/` en `catalog/api.py` devuelve JSON con categorías, edición, estado `habilitada`, votaciones públicas (abiertas y cerradas) y sus opciones desde MySQL. Las votaciones en borrador no se exponen. Otros métodos HTTP responden 405.
+
+```sh
+curl -s http://localhost:8000/api/categorias/
+```
+
+Datos de prueba (`seed_demo`, ficticios) por edición: «Rey Vallenato» con dos votaciones abiertas, «Canción inédita» abierta, «Piquería» cerrada y una votación en borrador oculta. Para votar, registrar un usuario de prueba en `/accounts/register/`.
+
+### Casos de prueba automatizados
+
+Archivo `catalog/test_voting.py`, ejecutado contra MySQL real:
+
+| Caso | Prueba |
+|------|--------|
+| CP-01 voto válido con confirmación | `test_cp01_valid_vote_requires_confirmation_then_persists_derived_relations` |
+| CP-02 segundo voto en la misma categoría | `test_cp02_second_vote_in_same_category_is_rejected_for_other_option_and_subevent` |
+| CP-03 voto en otra categoría | `test_cp03_vote_in_a_different_category_is_allowed` |
+| CP-04 usuario sin sesión | `test_cp04_anonymous_user_is_sent_to_login_and_nothing_is_stored` |
+| CP-05 categoría cerrada | `test_cp05_closed_poll_rejects_vote_and_draft_poll_is_not_found` |
+| CP-06 opción de otra categoría | `test_cp06_option_from_another_category_is_rejected` |
+| CP-07 «Mis votos» | `test_cp07_my_votes_lists_only_the_users_own_voted_categories` |
+| CP-08 consulta administrativa | `test_cp08_admin_vote_list_matches_database_and_is_read_only` |
+| CP-09 solicitudes simultáneas | `test_cp09_simultaneous_requests_store_a_single_vote` |
+| CP-10 API JSON | `test_cp10_get_returns_valid_json_with_categories_and_options_from_database` |
+
+Pruebas adicionales: rechazo sin token CSRF (403), GET al endpoint de voto (405), restricción única en base de datos, consultas constantes en la API.
+
+```sh
+docker compose exec -T web python manage.py test catalog.test_voting --noinput
+```
 
 ## Modelo y estructura MVT
 
 ```text
 config/                 configuración, rutas raíz y WSGI
 accounts/               registro e inicio/cierre de sesión; pruebas
-catalog/                modelos, vistas, Admin, migraciones y pruebas
+catalog/                modelos, vistas, Admin, votación (voting.py), API (api.py), migraciones y pruebas
 catalog/management/     comando seed_demo idempotente
 templates/              plantillas Django con datos reales
 static/                 estilos locales
