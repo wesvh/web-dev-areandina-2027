@@ -27,3 +27,4 @@ Design decision (user-approved 2026-11-08): "categoría habilitada" = the option
 - L1 User: "Implementalo, implementa todo lo relacionado a codigo que menciona la tarea"
 - L2 GREEN: catalog.test_voting 19/19; full suite accounts+catalog 43/43 on MySQL; check clean; makemigrations --check: no changes.
 - L3 Test runner note: bind-mounted ephemeral container needs collectstatic before tests (manifest storage).
+- L4 Audit PASS (opus-auditor). Fixed advisories 1 (lock parent FK in admin once voted) and 5 (option_required message); suite 46/46.

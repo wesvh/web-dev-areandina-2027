@@ -85,7 +85,8 @@ def vote(request, pk):
     form = VoteForm(poll, request.POST)
     try:
         if not form.is_valid():
-            raise VoteRejected("option_mismatch")
+            missing = form.has_error("option", "required")
+            raise VoteRejected("option_required" if missing else "option_mismatch")
         option = form.cleaned_data["option"]
         if request.POST.get("confirm") != "1":
             validate_vote(request.user, poll, option.pk)

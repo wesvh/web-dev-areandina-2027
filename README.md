@@ -49,7 +49,7 @@ Flujo: iniciar sesión → elegir categoría → abrir una votación → selecci
 - Validaciones del servidor en `catalog/voting.py`: sesión iniciada, votación habilitada (estado «Abierta»), opción perteneciente a la votación y ausencia de un voto previo en la categoría. Edición, categoría y votación se derivan de la opción en el servidor; nunca se toman del cliente.
 - Unicidad en base de datos: modelo `Vote` en `catalog/models.py` con `UniqueConstraint(fields=["user", "category", "edition"])` (migración `catalog/migrations/0002_vote.py`). `cast_vote` en `catalog/voting.py` captura `IntegrityError`, de modo que dos solicitudes simultáneas almacenan un único voto.
 - «Mis votos»: `/my-votes/`, solo para usuarios autenticados, muestra únicamente los votos propios.
-- Administración: Django Admin → Votos, de solo lectura (sin alta, edición ni borrado), con filtros por edición, categoría y votación.
+- Administración: Django Admin → Votos, de solo lectura (sin alta, edición ni borrado), con filtros por edición, categoría y votación. Cuando una categoría, votación u opción ya tiene votos, su vínculo con el elemento padre queda bloqueado en el Admin para no romper la regla de un voto.
 - API: `GET /api/categorias/` en `catalog/api.py` devuelve JSON con categorías, edición, estado `habilitada`, votaciones públicas (abiertas y cerradas) y sus opciones desde MySQL. Las votaciones en borrador no se exponen. Otros métodos HTTP responden 405.
 
 ```sh

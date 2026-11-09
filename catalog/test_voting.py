@@ -139,6 +139,13 @@ class VotingFlowTests(TestCase):
         response = self.client.get(reverse("catalog:my-votes"))
         self.assertEqual(response.status_code, 302)
 
+    def test_submission_without_option_asks_to_select_one(self):
+        response = self.client.post(self.vote_url(self.c["rey_main"]), {}, follow=True)
+
+        self.assertContains(response, "Selecciona una opción antes de continuar")
+        self.assertNotContains(response, "La opción no pertenece a esta votación")
+        self.assertFalse(Vote.objects.exists())
+
     def test_vote_endpoint_rejects_get(self):
         response = self.client.get(self.vote_url(self.c["rey_main"]))
         self.assertEqual(response.status_code, 405)
@@ -195,6 +202,28 @@ class AdminVoteTests(TestCase):
         self.assertContains(listing, "Acordeonero A")
         self.assertContains(listing, "Rey Vallenato")
         self.assertEqual(add.status_code, 403)
+
+    def test_parent_links_are_locked_in_admin_once_votes_exist(self):
+        self.client.force_login(self.admin)
+        pages = {
+            "edition": reverse("admin:catalog_category_change", args=[self.c["rey"].pk]),
+            "category": reverse("admin:catalog_poll_change", args=[self.c["rey_main"].pk]),
+            "poll": reverse("admin:catalog_option_change", args=[self.c["rey_a"].pk]),
+        }
+        for field, url in pages.items():
+            with self.subTest(field=field):
+                self.assertNotContains(self.client.get(url), f'name="{field}"')
+
+    def test_parent_links_stay_editable_without_votes(self):
+        self.client.force_login(self.admin)
+        pages = {
+            "edition": reverse("admin:catalog_category_change", args=[self.c["cancion"].pk]),
+            "category": reverse("admin:catalog_poll_change", args=[self.c["cancion_poll"].pk]),
+            "poll": reverse("admin:catalog_option_change", args=[self.c["cancion_a"].pk]),
+        }
+        for field, url in pages.items():
+            with self.subTest(field=field):
+                self.assertContains(self.client.get(url), f'name="{field}"')
 
     def test_regular_user_cannot_open_admin_vote_list(self):
         self.client.force_login(self.voter)

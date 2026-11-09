@@ -3,6 +3,18 @@ from django.contrib import admin
 from .models import Category, Edition, Option, Poll, Vote
 
 
+class LockParentOnceVotedMixin:
+    """Votes copy their parents; moving a voted object would break the one-vote rule."""
+
+    locked_parent_field = None
+
+    def get_readonly_fields(self, request, obj=None):
+        fields = tuple(super().get_readonly_fields(request, obj))
+        if obj is not None and obj.votes.exists():
+            fields += (self.locked_parent_field,)
+        return fields
+
+
 class CategoryInline(admin.TabularInline):
     model = Category
     extra = 0
@@ -27,7 +39,8 @@ class EditionAdmin(admin.ModelAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(LockParentOnceVotedMixin, admin.ModelAdmin):
+    locked_parent_field = "edition"
     list_display = ("name", "edition")
     list_filter = ("edition",)
     search_fields = ("name", "description")
@@ -35,7 +48,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Poll)
-class PollAdmin(admin.ModelAdmin):
+class PollAdmin(LockParentOnceVotedMixin, admin.ModelAdmin):
+    locked_parent_field = "category"
     list_display = ("title", "category", "status")
     list_filter = ("status", "category__edition")
     search_fields = ("title", "description", "category__name")
@@ -43,7 +57,8 @@ class PollAdmin(admin.ModelAdmin):
 
 
 @admin.register(Option)
-class OptionAdmin(admin.ModelAdmin):
+class OptionAdmin(LockParentOnceVotedMixin, admin.ModelAdmin):
+    locked_parent_field = "poll"
     list_display = ("name", "poll")
     list_filter = ("poll__category__edition", "poll__status")
     search_fields = ("name", "description", "poll__title")

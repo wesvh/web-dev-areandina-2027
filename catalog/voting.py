@@ -8,6 +8,7 @@ class VoteRejected(Exception):
     MESSAGES = {
         "not_authenticated": "Debes iniciar sesión para votar.",
         "poll_not_open": "La votación no está habilitada para recibir votos.",
+        "option_required": "Selecciona una opción antes de continuar.",
         "option_mismatch": "La opción no pertenece a esta votación.",
         "already_voted": "Ya registraste un voto en esta categoría.",
     }
