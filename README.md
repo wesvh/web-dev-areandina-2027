@@ -4,7 +4,7 @@ Aplicación académica funcional con **Python 3.12, Django 5.2 LTS, MySQL 8.4 y 
 
 ## Iniciar con un comando
 
-Ubicación de trabajo del autor en macOS, fuera de ChatGPT: `~/Documents/Universidad/festival-vallenato-2027`.
+Ubicación de trabajo del autor en macOS: `~/Documents/Universidad/festival-vallenato-2027`.
 
 ```sh
 cd "$HOME/Documents/Universidad/festival-vallenato-2027"

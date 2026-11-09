@@ -1,6 +1,6 @@
 # Guion para grabar la demostración - Entrega 2
 
-Para grabar alternando entre narración y demostración, utiliza [el guion paso a paso con enlaces directos](GUION_PASO_A_PASO.md). Carpeta local del proyecto: `~/Documents/Universidad/festival-vallenato-2027`, fuera de ChatGPT.
+Para grabar alternando entre narración y demostración, utiliza [el guion paso a paso con enlaces directos](GUION_PASO_A_PASO.md). Carpeta local del proyecto: `~/Documents/Universidad/festival-vallenato-2027`.
 
 Duración sugerida: 5 a 6 minutos; la guía del docente no fija duración. Grabar desde computador, con texto legible y la aplicación Django real, no el prototipo HTML. Adaptar las frases a lo que se muestre efectivamente.
 

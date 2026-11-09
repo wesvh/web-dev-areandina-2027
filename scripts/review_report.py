@@ -1,5 +1,6 @@
 """Audit report geometry and render contact sheets for visual review."""
 from pathlib import Path
+import shutil
 import subprocess
 import pdfplumber
 from PIL import Image, ImageDraw
@@ -15,8 +16,9 @@ with pdfplumber.open(PDF) as doc:
     assert not outside,outside
     count=len(doc.pages)
     print('APA report:',count,'pages; Letter; no text outside horizontal margins.')
-poppler=Path('/Users/esteban.villada/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdftoppm')
-subprocess.run([str(poppler),'-scale-to','1600','-png',str(PDF),str(DEST/'page')],check=True)
+poppler=shutil.which('pdftoppm')
+assert poppler,'pdftoppm (poppler) is required'
+subprocess.run([poppler,'-scale-to','1600','-png',str(PDF),str(DEST/'page')],check=True)
 files=sorted(DEST.glob('page-*.png'))[:count]
 for start in range(0,count,6):
     sheet=Image.new('RGB',(1230,1100),'#ddd')
