@@ -178,6 +178,25 @@ class DemoSeedCommandTests(TestCase):
             )
             self.assertTrue(Option.objects.filter(poll__category__edition=edition).exists())
 
+    def test_seed_catalog_lists_real_vallenato_artists_and_songs(self):
+        with patch.dict(
+            os.environ,
+            {"DEMO_ADMIN_USER": "seeded-admin", "DEMO_ADMIN_PASSWORD": "New-admin-pass-2027"},
+        ):
+            call_command("seed_demo", verbosity=0)
+
+        options = dict(Option.objects.values_list("name", "description").distinct())
+        self.assertEqual(options["La gota fría"], "Compositor: Emiliano Zuleta Baquero.")
+        self.assertEqual(options["Diomedes Díaz"], "El Cacique de La Junta.")
+        names = [
+            *options,
+            *Category.objects.values_list("name", flat=True),
+            *Poll.objects.values_list("title", flat=True),
+        ]
+        for name in names:
+            with self.subTest(name=name):
+                self.assertNotRegex(name.lower(), "muestra|ficti")
+
     def test_seed_covers_voting_scenarios_for_each_edition(self):
         with patch.dict(
             os.environ,

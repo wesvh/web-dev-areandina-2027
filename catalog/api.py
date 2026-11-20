@@ -1,11 +1,9 @@
-"""GET /api/categorias/: categories with their public polls and options from MySQL."""
+"""Input adapter (JSON). GET /api/categorias/: categories, public polls and options from MySQL."""
 from django.db.models import Prefetch
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET
 
 from .models import Category, Poll
-
-PUBLIC_POLL_STATUSES = (Poll.Status.OPEN, Poll.Status.CLOSED)
 
 
 def serialize_category(category):
@@ -38,7 +36,7 @@ def serialize_category(category):
 
 @require_GET
 def categories(request):
-    public_polls = Poll.objects.filter(status__in=PUBLIC_POLL_STATUSES).prefetch_related("options")
+    public_polls = Poll.objects.filter(status__in=Poll.PUBLIC_STATUSES).prefetch_related("options")
     queryset = (
         Category.objects.select_related("edition")
         .prefetch_related(Prefetch("polls", queryset=public_polls))

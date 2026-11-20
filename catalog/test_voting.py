@@ -7,7 +7,11 @@ from django.test import Client, TestCase, TransactionTestCase
 from django.urls import reverse
 
 from .models import Category, Edition, Option, Poll, Vote
-from .voting import VoteRejected, cast_vote
+from .core.domain import VoteRejected
+from .core.services import VotingService
+from .repository import DjangoVoteRepository
+
+voting = VotingService(DjangoVoteRepository())
 
 
 def build_catalog():
@@ -87,6 +91,16 @@ class VotingFlowTests(TestCase):
         self.assertContains(other_option, "Ya registraste un voto en esta categoría")
         self.assertContains(other_subevent, "Ya registraste un voto en esta categoría")
 
+    def test_confirmation_step_already_rejects_second_vote_in_same_category(self):
+        self.confirm_vote(self.c["rey_main"], self.c["rey_a"])
+
+        response = self.client.post(
+            self.vote_url(self.c["rey_sub"]), {"option": self.c["rey_sub_a"].pk}, follow=True
+        )
+
+        self.assertNotContains(response, "Confirmar voto")
+        self.assertContains(response, "Ya registraste un voto en esta categoría")
+
     def test_cp03_vote_in_a_different_category_is_allowed(self):
         self.confirm_vote(self.c["rey_main"], self.c["rey_a"])
         self.confirm_vote(self.c["cancion_poll"], self.c["cancion_a"])
@@ -126,7 +140,7 @@ class VotingFlowTests(TestCase):
     def test_cp07_my_votes_lists_only_the_users_own_voted_categories(self):
         self.confirm_vote(self.c["rey_main"], self.c["rey_a"])
         other = get_user_model().objects.create_user("otro", password="Clave-segura-2027")
-        cast_vote(other, self.c["cancion_poll"], self.c["cancion_a"].pk)
+        voting.cast(other.pk, self.c["cancion_poll"].pk, self.c["cancion_a"].pk)
 
         response = self.client.get(reverse("catalog:my-votes"))
 
@@ -189,7 +203,7 @@ class AdminVoteTests(TestCase):
     def setUp(self):
         self.c = build_catalog()
         self.voter = get_user_model().objects.create_user("votante", password="Clave-segura-2027")
-        cast_vote(self.voter, self.c["rey_main"], self.c["rey_a"].pk)
+        voting.cast(self.voter.pk, self.c["rey_main"].pk, self.c["rey_a"].pk)
         self.admin = get_user_model().objects.create_superuser("admin", password="Clave-admin-2027")
 
     def test_cp08_admin_vote_list_matches_database_and_is_read_only(self):
@@ -242,7 +256,7 @@ class ConcurrentVoteTests(TransactionTestCase):
         def attempt(poll, option):
             try:
                 barrier.wait()
-                cast_vote(user, poll, option.pk)
+                voting.cast(user.pk, poll.pk, option.pk)
                 outcomes.append("stored")
             except VoteRejected as rejection:
                 outcomes.append(rejection.code)
@@ -299,3 +313,32 @@ class CategoriesApiTests(TestCase):
 
     def test_api_only_accepts_get(self):
         self.assertEqual(self.client.post("/api/categorias/").status_code, 405)
+
+
+class ResultsPageTests(TestCase):
+    def setUp(self):
+        self.c = build_catalog()
+
+    def vote_as(self, username, poll, option):
+        client = Client()
+        client.force_login(get_user_model().objects.create_user(username, password="Clave-2027-x"))
+        client.post(reverse("catalog:vote", args=[poll.pk]), {"option": option.pk, "confirm": "1"})
+
+    def test_cp11_results_count_votes_stored_in_database_for_any_visitor(self):
+        self.vote_as("ana", self.c["rey_main"], self.c["rey_a"])
+        self.vote_as("luis", self.c["rey_main"], self.c["rey_a"])
+        self.vote_as("eva", self.c["rey_main"], self.c["rey_b"])
+
+        response = self.client.get("/results/")
+
+        self.assertEqual(response.status_code, 200)
+        row = (
+            '<tr><th scope="row">{0}</th><td>{1}</td><td>{2} %</td>'
+            '<td><progress max="100" value="{2}" aria-hidden="true"></progress></td></tr>'
+        )
+        self.assertContains(response, row.format("Acordeonero A", 2, 67), html=True)
+        self.assertContains(response, row.format("Acordeonero B", 1, 33), html=True)
+        self.assertContains(response, row.format("Finalista A", 0, 0), html=True)
+        self.assertContains(response, "Total: 3 votos")
+        self.assertContains(response, "Piquería cerrada")
+        self.assertNotContains(response, "Oculta A")

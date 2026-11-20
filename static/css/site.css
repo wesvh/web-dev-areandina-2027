@@ -139,3 +139,8 @@ p { margin: .55rem 0 1rem; }
 .data-table { width: 100%; border-collapse: collapse; background: var(--paper); }
 .data-table th, .data-table td { padding: .7rem .8rem; border-bottom: 1px solid var(--line); text-align: left; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Results page */
+.result-card { margin-bottom: 1.5rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.result-card progress { width: 100%; min-width: 6rem; height: .75rem; accent-color: var(--green-800); }
+.result-total { margin: .75rem 0 0; font-weight: 700; color: var(--green-950); }

@@ -38,6 +38,8 @@ class Poll(models.Model):
         OPEN = "open", "Abierta"
         CLOSED = "closed", "Cerrada"
 
+    PUBLIC_STATUSES = (Status.OPEN, Status.CLOSED)  # drafts never leave the admin
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="polls")
     title = models.CharField(max_length=180)
     description = models.TextField(blank=True)

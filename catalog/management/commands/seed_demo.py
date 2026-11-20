@@ -7,7 +7,7 @@ from catalog.models import Category, Edition, Option, Poll
 
 
 class Command(BaseCommand):
-    help = "Create fictional sample catalog entries without overwriting existing records."
+    help = "Create the sample catalog (real artists and songs) without overwriting existing records."
 
     def handle(self, *args, **options):
         admin_username = os.environ.get("DEMO_ADMIN_USER")
@@ -38,71 +38,87 @@ class Command(BaseCommand):
                     name=category_name,
                     defaults={"description": category_description},
                 )
-                for title, description, status, option_names in polls:
+                for title, description, status, options in polls:
                     poll, _ = Poll.objects.get_or_create(
                         category=category,
                         title=title,
                         defaults={"description": description, "status": status},
                     )
-                    for option_name in option_names:
+                    for option_name, option_description in options:
                         Option.objects.get_or_create(
                             poll=poll,
                             name=option_name,
-                            defaults={"description": "Opción ficticia de demostración."},
+                            defaults={"description": option_description},
                         )
         self.stdout.write(self.style.SUCCESS("Catálogo de demostración disponible."))
 
 
 def sample_catalog(year):
-    """Fictional voting scenarios: multi-subevent category, second open category,
-    closed category and a hidden draft."""
+    """Real artists and songs arranged in the scenarios the demo needs: a category with two
+    open subevents, a second open category, a closed category and a hidden draft."""
     open_, closed, draft = Poll.Status.OPEN, Poll.Status.CLOSED, Poll.Status.DRAFT
     return [
         (
-            "Rey Vallenato - muestra ficticia",
-            "Categoría de demostración; participantes ficticios.",
+            "Íconos del vallenato",
+            "Acordeoneros y cantantes que marcaron el género. Un solo voto en toda la categoría.",
             [
                 (
-                    f"Artista favorito {year} - muestra",
-                    "Votación ficticia de demostración; un voto por usuario en esta categoría.",
+                    f"Acordeonero favorito {year}",
+                    "Elige al acordeonero que más admiras.",
                     open_,
-                    [f"Acordeón de muestra {year}", f"Compositor de muestra {year}"],
+                    [
+                        ("Alfredo Gutiérrez", "Tres veces Rey Vallenato."),
+                        ("Egidio Cuadrado", "Acordeonero de Carlos Vives y La Provincia."),
+                        ("Israel Romero", "Acordeonero y fundador de El Binomio de Oro."),
+                        ("Juancho Rois", "Acordeonero de Diomedes Díaz."),
+                    ],
                 ),
                 (
-                    f"Ronda final {year} - muestra",
-                    "Subevento ficticio de la misma categoría; comparte el límite de un voto.",
+                    f"Voz favorita {year}",
+                    "Subevento de la misma categoría; comparte el límite de un voto.",
                     open_,
-                    [f"Finalista ficticio A {year}", f"Finalista ficticio B {year}"],
+                    [
+                        ("Diomedes Díaz", "El Cacique de La Junta."),
+                        ("Jorge Oñate", "El Jilguero de América."),
+                        ("Poncho Zuleta", "Voz de Los Hermanos Zuleta."),
+                        ("Silvestre Dangond", "Voz de la nueva generación del vallenato."),
+                    ],
                 ),
+                (f"Nuevos talentos {year}", "Borrador; no aparece en el sitio público.", draft, []),
+            ],
+        ),
+        (
+            "Canción vallenata",
+            "Clásicos del vallenato con su compositor. Se vota aparte de los íconos.",
+            [
                 (
-                    f"Votación borrador {year} - muestra",
-                    "Borrador de demostración no visible en el catálogo público.",
-                    draft,
-                    [],
+                    f"Canción clásica favorita {year}",
+                    "Elige la canción que mejor representa al vallenato.",
+                    open_,
+                    [
+                        ("La gota fría", "Compositor: Emiliano Zuleta Baquero."),
+                        ("Alicia adorada", "Compositor: Juancho Polo Valencia."),
+                        ("Matilde Lina", "Compositor: Leandro Díaz."),
+                        ("Pedazo de acordeón", "Compositor: Alejo Durán."),
+                        ("Los caminos de la vida", "Compositor: Omar Geles."),
+                    ],
                 ),
             ],
         ),
         (
-            "Canción inédita - muestra ficticia",
-            "Segunda categoría de demostración; permite votar de forma independiente.",
+            "Homenaje a Rafael Escalona",
+            "Canciones de Rafael Escalona, uno de los fundadores del festival.",
             [
                 (
-                    f"Canción favorita {year} - muestra",
-                    "Votación ficticia de demostración.",
-                    open_,
-                    [f"Canción de muestra A {year}", f"Canción de muestra B {year}"],
-                ),
-            ],
-        ),
-        (
-            "Piquería - muestra ficticia",
-            "Categoría de demostración con la votación cerrada.",
-            [
-                (
-                    f"Piquería {year} - muestra cerrada",
-                    "Votación cerrada; no recibe votos.",
+                    f"Canción de Escalona favorita {year}",
+                    "Votación cerrada; ya no recibe votos.",
                     closed,
-                    [f"Piquero de muestra A {year}", f"Piquero de muestra B {year}"],
+                    [
+                        ("La casa en el aire", "Compositor: Rafael Escalona."),
+                        ("El testamento", "Compositor: Rafael Escalona."),
+                        ("Jaime Molina", "Compositor: Rafael Escalona."),
+                        ("La custodia de Badillo", "Compositor: Rafael Escalona."),
+                    ],
                 ),
             ],
         ),

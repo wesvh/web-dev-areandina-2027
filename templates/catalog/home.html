@@ -1,16 +1,27 @@
 {% extends "base.html" %}
-{% load static %}
+{# Rendered by catalog.views.home #}
 
-{% block title %}Ediciones · Festival 2027{% endblock %}
+{% block title %}Ediciones · Festival Vallenato{% endblock %}
+
 {% block content %}
 <section class="hero">
   <p class="eyebrow">Tradición · música · encuentro</p>
   <h1>Ediciones del Festival</h1>
   <p class="lead">Explora las ediciones, categorías y votaciones disponibles en este catálogo.</p>
-  <p class="notice"><strong>Demostración académica:</strong> los datos son ficticios. Inicia sesión para votar: un voto por categoría y edición.</p>
+  <p class="notice">
+    <strong>Demostración académica:</strong> artistas y canciones reales; los votos son de prueba y no son resultados oficiales del festival.
+    Inicia sesión para votar: un voto por categoría y edición.
+  </p>
 </section>
+
 <section class="content-section" aria-labelledby="ediciones-titulo">
-  <div class="section-heading"><div><p class="eyebrow">Archivo del festival</p><h2 id="ediciones-titulo">Ediciones</h2></div></div>
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Archivo del festival</p>
+      <h2 id="ediciones-titulo">Ediciones</h2>
+    </div>
+  </div>
+
   {% if editions %}
     <div class="card-grid">
       {% for edition in editions %}
@@ -22,7 +33,10 @@
       {% endfor %}
     </div>
   {% else %}
-    <div class="empty-state"><h3>Aún no hay ediciones</h3><p>Las ediciones aparecerán aquí cuando se agreguen al catálogo.</p></div>
+    <div class="empty-state">
+      <h3>Aún no hay ediciones</h3>
+      <p>Las ediciones aparecerán aquí cuando se agreguen al catálogo.</p>
+    </div>
   {% endif %}
 </section>
 {% endblock %}

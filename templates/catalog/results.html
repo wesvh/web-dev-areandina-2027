@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{# Rendered by catalog.views.results with PollResult objects from the core #}
+
+{% block title %}Resultados · Festival Vallenato{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+  <p class="eyebrow">Conteo en vivo desde MySQL</p>
+  <h1>Resultados</h1>
+  <p class="lead">
+    Votos registrados por opción en cada votación pública.
+    Las votaciones abiertas muestran resultados parciales.
+  </p>
+</section>
+
+{% regroup results by edition_year as editions %}
+{% for edition in editions %}
+  <section class="content-section" aria-labelledby="edicion-{{ edition.grouper }}">
+    <div class="section-heading"><h2 id="edicion-{{ edition.grouper }}">Edición {{ edition.grouper }}</h2></div>
+
+    {% for poll in edition.list %}
+      <article class="result-card">
+        <p class="eyebrow">{{ poll.category }}</p>
+        <h3>{{ poll.title }}</h3>
+        <span class="status-badge">
+          {% if poll.is_open %}Parcial · votación abierta{% else %}Final · votación cerrada{% endif %}
+        </span>
+
+        {% if poll.options %}
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Opción</th>
+                  <th scope="col">Votos</th>
+                  <th scope="col">Porcentaje</th>
+                  <th scope="col"><span class="visually-hidden">Gráfico</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for option in poll.options %}
+                  <tr>
+                    <th scope="row">{{ option.name }}</th>
+                    <td>{{ option.votes }}</td>
+                    <td>{{ option.percent }} %</td>
+                    <td><progress max="100" value="{{ option.percent }}" aria-hidden="true"></progress></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+        <p class="result-total">Total: {{ poll.total_votes }} voto{{ poll.total_votes|pluralize }}</p>
+      </article>
+    {% endfor %}
+  </section>
+{% empty %}
+  <div class="empty-state">
+    <h3>No hay votaciones públicas</h3>
+    <p>Los resultados aparecerán cuando una votación esté abierta o cerrada.</p>
+  </div>
+{% endfor %}
+{% endblock %}

@@ -12,5 +12,6 @@ urlpatterns = [
     path("polls/<int:pk>/", views.poll_detail, name="poll"),
     path("polls/<int:pk>/vote/", views.vote, name="vote"),
     path("my-votes/", views.my_votes, name="my-votes"),
+    path("results/", views.results, name="results"),
     path("api/categorias/", api.categories, name="api-categories"),
 ]
